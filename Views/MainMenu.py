@@ -7,7 +7,7 @@ from Controllers.StockController import *
 
 class MainMenu(ttk.Frame):
 
-    stock = StockDetails()
+    stock = StockDetail()
     stockCtrl = StockController()
     status = stockCtrl.Intiallize()
     header = stockCtrl.StockHeader()
@@ -31,7 +31,7 @@ class MainMenu(ttk.Frame):
         self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.W)
 
         self.labelfooter = ttk.Label(self, text = self.status)
-        self.labelfooter.grid(row=4, column=0, sticky=tk.SW)
+        self.labelfooter.grid(row=4, column=0, padx=3, sticky=tk.SW)
 
         # define columns
         columns = self.header
@@ -58,8 +58,13 @@ class MainMenu(ttk.Frame):
                 item = self.tree.item(selected_item)
                 record = item['values']
                 # show a message
-                showinfo(title='Information', message=record[0])
-                print(record)
+                # showinfo(title='Information', message=record[0])
+                # print(record)
+                self.stock.setStockName(record[0])
+                self.stock.setRemark(record[1])
+                print(self.stock.getStockName())
+                self.stockCtrl.StockStatement(self.stock)
+                showinfo(title='Information', message=self.stock.getMessage())
 
 
         self.tree.bind('<<TreeviewSelect>>', item_selected)

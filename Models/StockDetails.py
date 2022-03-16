@@ -1,4 +1,4 @@
-class StockDetails:
+class StockDetail:
 
     def __init__(self):
         pass
@@ -9,12 +9,14 @@ class StockDetails:
     __OpenPrice = 0.00
     __HighPrice = 0.00
     __LowPrice = 0.00
+    __CurrentPrice = 0.00
     __Change = 0.00
     __PercentChange = 0.00
     __OfferPrice = 0.00
     __SalePrice = 0.00
     __Volume = 0.00
     __Value = 0.00
+    __Message = ""
 
     #Getters
     def getStockName(self):
@@ -31,6 +33,9 @@ class StockDetails:
 
     def getLowPrice(self):
         return self.__LowPrice
+
+    def getCurrentPrice(self):
+        return self.__CurrentPrice
 
     def getChage(self):
         return self.__Change
@@ -50,11 +55,14 @@ class StockDetails:
     def getValue(self):
         return self.__Value
 
+    def getMessage(self):
+        return self.__Message
+
     #setter
     def setStockName(self, param):
         self.__StockName = param
 
-    def getRemark(self, param):
+    def setRemark(self, param):
         self.__Remark = param
     
     def setOpenPrice(self, param):
@@ -65,6 +73,9 @@ class StockDetails:
 
     def setLowPrice(self, param):
         self.__LowPrice = param
+
+    def setCurrentPrice(self, param):
+        self.__CurrentPrice = param
 
     def setChange(self, param):
         self.__Change = param
@@ -83,4 +94,7 @@ class StockDetails:
 
     def setValue(self, param):
         self.__Volume = param
+
+    def setMessage(self, param):
+        self.__Message = param
     

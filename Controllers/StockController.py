@@ -1,8 +1,7 @@
 from Controllers.Connections import *
 from Models.StockDetails import *
+
 import pandas as pd
-# from datetime import date
-# import numpy as np
 
 class StockController:
 
@@ -21,3 +20,15 @@ class StockController:
         
     def StockData(self):
         return self.__stock.values.tolist()
+
+    def __isVaildStock(self, StockDetail):
+        if StockDetail.getStockName() != "":
+            return True
+        return False
+
+    def StockStatement(self, StockDetail):
+        if self.__isVaildStock(StockDetail):
+            StockDetail.setMessage(f"{StockDetail.getStockName()} : {StockDetail.getCurrentPrice()}")
+        else:
+            StockDetail.setMessage("Not Valid StockName")
+
