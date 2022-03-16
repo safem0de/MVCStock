@@ -5,6 +5,7 @@ class StockDetails:
 
     #private members
     __StockName = ""
+    __Remark = ""
     __OpenPrice = 0.00
     __HighPrice = 0.00
     __LowPrice = 0.00
@@ -18,6 +19,9 @@ class StockDetails:
     #Getters
     def getStockName(self):
         return self.__StockName
+
+    def getRemark(self):
+        return self.__Remark
 
     def getOpenPrice(self):
         return self.__OpenPrice
@@ -49,6 +53,9 @@ class StockDetails:
     #setter
     def setStockName(self, param):
         self.__StockName = param
+
+    def getRemark(self, param):
+        self.__Remark = param
     
     def setOpenPrice(self, param):
         self.__OpenPrice = param
