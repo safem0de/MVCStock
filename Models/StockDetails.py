@@ -14,7 +14,6 @@ class StockDetails:
     __SalePrice = 0.00
     __Volume = 0.00
     __Value = 0.00
-    __Message = "x"
 
     #Getters
     def getStockName(self):
@@ -47,9 +46,6 @@ class StockDetails:
     def getValue(self):
         return self.__Value
 
-    def getMessage(self):
-        return self.__Message
-
     #setter
     def setStockName(self, param):
         self.__StockName = param
@@ -80,7 +76,4 @@ class StockDetails:
 
     def setValue(self, param):
         self.__Volume = param
-
-    def setMessage(self, param):
-        self.__Message = param
     

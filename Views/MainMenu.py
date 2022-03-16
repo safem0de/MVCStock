@@ -1,5 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
+from tkinter.messagebox import showinfo
 
 from Models.StockDetails import *
 from Controllers.StockController import *
@@ -8,7 +9,9 @@ class MainMenu(ttk.Frame):
 
     stock = StockDetails()
     stockCtrl = StockController()
-    stockCtrl.Intiallize(stock)
+    status = stockCtrl.Intiallize()
+    header = stockCtrl.StockHeader()
+    set100 = stockCtrl.StockData()
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -27,27 +30,27 @@ class MainMenu(ttk.Frame):
         self.StockAnalyse_btn = ttk.Button(self, text='Analyse')
         self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.W)
 
-        self.labelfooter = ttk.Label(self, text = self.stock.getMessage())
+        self.labelfooter = ttk.Label(self, text = self.status)
         self.labelfooter.grid(row=4, column=0, sticky=tk.SW)
 
         # define columns
-        columns = ('first_name', 'last_name', 'email')
+        columns = self.header
 
         self.tree = ttk.Treeview(self, columns=columns, show='headings')
 
         # define headings
-        self.tree.heading('first_name', text='First Name')
-        self.tree.heading('last_name', text='Last Name')
-        self.tree.heading('email', text='Email')
+        for col in columns:
+            self.tree.heading(col, text = col)
+            self.tree.column(col, minwidth=0, width=80, stretch=False)
 
         # generate sample data
-        contacts = []
-        for n in range(1, 100):
-            contacts.append((f'first {n}', f'last {n}', f'email{n}@example.com'))
+        # contacts = []
+        # for n in range(1, 100):
+        #     contacts.append((f'first {n}', f'last {n}', f'email{n}@example.com'))
 
         # add data to the treeview
-        for contact in contacts:
-            self.tree.insert('', tk.END, values=contact)
+        for data in self.set100:
+            self.tree.insert('', tk.END, values=data)
 
 
         # def item_selected(event):
@@ -61,10 +64,10 @@ class MainMenu(ttk.Frame):
         # self.tree.bind('<<TreeviewSelect>>', item_selected)
 
         # self.tree.grid(row=0, column=1, sticky=tk.NS)
-        self.tree.grid(row=0, column=1, columnspan = 3, rowspan = 20, sticky=tk.NS)
+        self.tree.grid(row=0, column=1, rowspan=20, sticky=tk.NS)
 
         # add a scrollbar
-        # scrollbar = ttk.Scrollbar(root, orient=tk.VERTICAL, command=tree.yview)
-        # tree.configure(yscroll=scrollbar.set)
-        # scrollbar.grid(row=0, column=1, sticky='ns')
+        scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
+        self.tree.configure(yscroll=scrollbar.set)
+        scrollbar.grid(row=0, column=2, rowspan=20, sticky=tk.NS)
 

@@ -19,7 +19,3 @@ class Connection:
         else:
             Connection.message = "Connected, with the IP address: "+ IPaddress
         return Connection.message
-
-# c = Connections()
-# c.connect()
-# print(c.message)

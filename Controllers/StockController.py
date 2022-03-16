@@ -7,15 +7,17 @@ import pandas as pd
 class StockController:
 
     def __init__(self):
-        pass
+        self.__dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
+                       , match="เครื่องหมาย" ,encoding='utf8')
+        self.__stock = self.__dfsList[0]
     
-    def Intiallize(self,StockDetails):
+    def Intiallize(self):
         c = Connection()
         c.connect()
-        StockDetails.setMessage(c.message)
-        dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
-                       , match="เครื่องหมาย" ,encoding='utf8')
-        for col in dfsList.columns:
-            print(col)
+        return c.message
         
+    def StockHeader(self):
+        return tuple(self.__stock.columns)
         
+    def StockData(self):
+        return self.__stock.values.tolist()
