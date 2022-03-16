@@ -53,15 +53,16 @@ class MainMenu(ttk.Frame):
             self.tree.insert('', tk.END, values=data)
 
 
-        # def item_selected(event):
-        #     for selected_item in self.tree.selection():
-        #         item = self.tree.item(selected_item)
-        #         record = item['values']
-        #         # show a message
-        #         self.showinfo(title='Information', message=','.join(record))
+        def item_selected(event):
+            for selected_item in self.tree.selection():
+                item = self.tree.item(selected_item)
+                record = item['values']
+                # show a message
+                showinfo(title='Information', message=record[0])
+                print(record)
 
 
-        # self.tree.bind('<<TreeviewSelect>>', item_selected)
+        self.tree.bind('<<TreeviewSelect>>', item_selected)
 
         # self.tree.grid(row=0, column=1, sticky=tk.NS)
         self.tree.grid(row=0, column=1, rowspan=20, sticky=tk.NS)
