@@ -27,16 +27,35 @@ class StockController:
             return True
         return False
 
-    def StockStatementHeader(self, StockDetail):
-        pass
-
     def StockStatement(self, StockDetail):
         if self.__isVaildStock(StockDetail):
             dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + StockDetail.getStockName() + '&language=th&country=TH'
                        , match="งวดงบการเงิน")
             df = dfstock[0]
             StockDetail.setMessage(f"{StockDetail.getStockName()} : {StockDetail.getCurrentPrice()}")
-            return df.values.tolist()
+            # print(type(df))
+            return df
         else:
             StockDetail.setMessage("Not Valid StockName")
+            return pd.DataFrame()
+
+    def StockStatementHeader(self, StockDetail):
+        stockstatement = self.StockStatement(StockDetail)
+        listOfColumn = []
+        # print(tuple(stockstatement.columns))
+        # print(type(stockstatement))
+        if not stockstatement.empty:
+            tp = list(stockstatement)
+            for i in tp:
+                if "Unnamed" in str(i[0]): 
+                    listOfColumn.append(str(i[1]))
+                elif "Unnamed" in str(i[1]): 
+                    listOfColumn.append(str(i[0]))
+                else:
+                    listOfColumn.append(str(i[0]) +' '+str(i[1]))
+            print(listOfColumn)
+        return listOfColumn
+
+    def StockStatementData(self, StockDetail):
+        pass
 
