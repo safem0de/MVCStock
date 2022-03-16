@@ -19,7 +19,6 @@ class StockController:
         return tuple(self.__stock.columns)
         
     def StockData(self):
-        stockData = []
         return self.__stock.values.tolist()
 
     def __isVaildStock(self, StockDetail):
@@ -57,5 +56,8 @@ class StockController:
         return listOfColumn
 
     def StockStatementData(self, StockDetail):
-        pass
+        stockstatement = self.StockStatement(StockDetail)
+        if not stockstatement.empty:
+            print("555")
+
 

@@ -14,7 +14,7 @@ class MainMenu(ttk.Frame):
     set100 = stockCtrl.StockData()
 
     financial = stockCtrl.StockStatement(stock)
-    test = stockCtrl.StockStatementHeader(stock)
+    fin_header = stockCtrl.StockStatementHeader(stock)
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -76,7 +76,7 @@ class MainMenu(ttk.Frame):
                 self.stock.setValue(record[11])
                 print(self.stock.getStockName())
                 self.financial = self.stockCtrl.StockStatement(self.stock)
-                self.test = self.stockCtrl.StockStatementHeader(self.stock)
+                self.fin_header = self.stockCtrl.StockStatementHeader(self.stock)
                 showinfo(title='Information', message=self.stock.getMessage())
                 financialTable()
 
@@ -92,7 +92,8 @@ class MainMenu(ttk.Frame):
 
         ### ------------------table2--------------------
         def financialTable():
-            columns2 = self.test
+            
+            columns2 = self.fin_header
 
             self.tree2 = ttk.Treeview(self, columns=columns2, show='headings')
             
@@ -100,7 +101,6 @@ class MainMenu(ttk.Frame):
                 self.tree2.heading(col2, text = col2)
                 self.tree2.column(col2, minwidth=0, width=160, stretch=False)
 
-            
 
 
 
