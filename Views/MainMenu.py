@@ -52,7 +52,6 @@ class MainMenu(ttk.Frame):
         for data in self.set100:
             self.tree.insert('', tk.END, values=data)
 
-
         def item_selected(event):
             for selected_item in self.tree.selection():
                 item = self.tree.item(selected_item)
@@ -62,10 +61,19 @@ class MainMenu(ttk.Frame):
                 # print(record)
                 self.stock.setStockName(record[0])
                 self.stock.setRemark(record[1])
+                self.stock.setOpenPrice(record[2])
+                self.stock.setHighPrice(record[3])
+                self.stock.setLowPrice(record[4])
+                self.stock.setCurrentPrice(record[5])
+                self.stock.setChange(record[6])
+                self.stock.setPercentChange(record[7])
+                self.stock.setOfferPrice(record[8])
+                self.stock.setSalePrice(record[9])
+                self.stock.setVolume(record[10])
+                self.stock.setValue(record[11])
                 print(self.stock.getStockName())
                 self.stockCtrl.StockStatement(self.stock)
                 showinfo(title='Information', message=self.stock.getMessage())
-
 
         self.tree.bind('<<TreeviewSelect>>', item_selected)
 
@@ -77,3 +85,17 @@ class MainMenu(ttk.Frame):
         self.tree.configure(yscroll=scrollbar.set)
         scrollbar.grid(row=0, column=2, rowspan=20, sticky=tk.NS)
 
+        columns2 = self.header
+
+        self.tree2 = ttk.Treeview(self, columns=columns2, show='headings')
+        
+        for col2 in columns2:
+            self.tree.heading(col2, text = col2)
+            self.tree.column(col2, minwidth=0, width=80, stretch=False)
+
+        
+
+
+
+
+        self.tree2.grid(row=22, column=1, sticky=tk.NS)

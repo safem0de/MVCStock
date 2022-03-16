@@ -19,6 +19,7 @@ class StockController:
         return tuple(self.__stock.columns)
         
     def StockData(self):
+        stockData = []
         return self.__stock.values.tolist()
 
     def __isVaildStock(self, StockDetail):
@@ -26,9 +27,16 @@ class StockController:
             return True
         return False
 
+    def StockStatementHeader(self, StockDetail):
+        pass
+
     def StockStatement(self, StockDetail):
         if self.__isVaildStock(StockDetail):
+            dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + StockDetail.getStockName() + '&language=th&country=TH'
+                       , match="งวดงบการเงิน")
+            df = dfstock[0]
             StockDetail.setMessage(f"{StockDetail.getStockName()} : {StockDetail.getCurrentPrice()}")
+            return df.values.tolist()
         else:
             StockDetail.setMessage("Not Valid StockName")
 
