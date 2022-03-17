@@ -39,7 +39,7 @@ class MainMenu(ttk.Frame):
         # define columns
         columns = self.header
 
-        self.tree = ttk.Treeview(self, columns=columns, show='headings')
+        self.tree = ttk.Treeview(self, columns=columns, show='headings', name='stock')
 
         # define headings
         for col in columns:
@@ -83,19 +83,19 @@ class MainMenu(ttk.Frame):
         self.tree.bind('<<TreeviewSelect>>', item_selected)
 
         # self.tree.grid(row=0, column=1, sticky=tk.NS)
-        self.tree.grid(row=0, column=1, rowspan=20, pady=3, sticky=tk.N)
+        self.tree.grid(row=0, column=1, rowspan=20, pady=3, sticky=tk.NS)
 
         # add a scrollbar
         scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
-        scrollbar.grid(row=0, column=2, rowspan=20, pady=3, sticky=tk.N)
+        scrollbar.grid(row=0, column=2, rowspan=20, pady=3, sticky=tk.NS)
 
-        ### ------------------table2--------------------
+        ### ------------------table2--------------------###
         def financialTable():
             
             columns2 = self.fin_header
 
-            self.tree2 = ttk.Treeview(self, columns=columns2, show='headings')
+            self.tree2 = ttk.Treeview(self, columns=columns2, show='headings', name='financial')
             
             for col2 in columns2:
                 self.tree2.heading(col2, text = col2)
@@ -110,4 +110,4 @@ class MainMenu(ttk.Frame):
             # add a scrollbar
             scrollbar2 = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree2.yview)
             self.tree2.configure(yscroll=scrollbar2.set)
-            scrollbar2.grid(row=0, column=2, rowspan=20, sticky=tk.NS)
+            scrollbar2.grid(row=21, column=2, rowspan=20, sticky=tk.NS)
