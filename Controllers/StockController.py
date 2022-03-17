@@ -6,9 +6,12 @@ import pandas as pd
 class StockController:
 
     def __init__(self):
-        self.__dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
-                       , match="เครื่องหมาย" ,encoding='utf8')
-        self.__stock = self.__dfsList[0]
+        try:
+            self.__dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
+                        , match="เครื่องหมาย" ,encoding='utf8')
+            self.__stock = self.__dfsList[0]
+        except:
+            pass
     
     def Intiallize(self):
         c = Connection()
@@ -16,10 +19,16 @@ class StockController:
         return c.message
         
     def StockHeader(self):
-        return tuple(self.__stock.columns)
+        try:
+            return tuple(self.__stock.columns)
+        except:
+            return tuple()
         
     def StockData(self):
-        return self.__stock.values.tolist()
+        try:
+            return self.__stock.values.tolist()
+        except:
+            return list()
 
     def __isVaildStock(self, StockDetail):
         if StockDetail.getStockName() != "":
@@ -40,8 +49,6 @@ class StockController:
     def StockStatementHeader(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         listOfColumn = []
-        # print(tuple(stockstatement.columns))
-        # print(type(stockstatement))
         if not stockstatement.empty:
             tp = list(stockstatement)
             for i in tp:
@@ -51,11 +58,11 @@ class StockController:
                     listOfColumn.append(str(i[0]))
                 else:
                     listOfColumn.append(str(i[0]) +' '+str(i[1]))
-            # print(listOfColumn)
         return listOfColumn
 
     def StockStatementData(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         if not stockstatement.empty:
-            # print(stockstatement.values.tolist())
+            m = stockstatement.columns
+            print(m)
             return stockstatement.values.tolist()

@@ -1,5 +1,7 @@
 import urllib.request
+import urllib.error
 import socket
+import sys
 
 class Connection:
         
@@ -9,13 +11,18 @@ class Connection:
         try:
             urllib.request.urlopen('http://google.com')
             return True
-        except:
+        except urllib.error.URLError as e:
+            print(e.reason)
             return False
 
-    def connect(req=requestGoogle()):
-        IPaddress=socket.gethostbyname(socket.gethostname())
-        if req == False:
-            Connection.message = "No internet, your localhost is "+ IPaddress
-        else:
-            Connection.message = "Connected, with the IP address: "+ IPaddress
-        return Connection.message
+    try:
+        def connect(req=requestGoogle()):
+            IPaddress=socket.gethostbyname(socket.gethostname())
+            if req == False or "10.121" in IPaddress or IPaddress=="127.0.0.1":
+                Connection.message = "No internet, your localhost is "+ IPaddress
+                sys.exit(Connection.message)
+            else:
+                Connection.message = "Connected, with the IP address: "+ IPaddress
+            return Connection.message
+    except:
+        print("No Internet")
