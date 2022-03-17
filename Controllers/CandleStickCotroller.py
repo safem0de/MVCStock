@@ -1,5 +1,5 @@
 from tkinter import Toplevel
-from Views.Analyse import *
+from Views.CandleStick import *
 
 class CandleContoller:
 
@@ -7,7 +7,7 @@ class CandleContoller:
         self.view = view
 
     def openCandelStick(self):
-        analyse = Toplevel()
-        analyse.title("Candle Stick")
-        view = StockAnalyse(analyse)
+        candle = Toplevel()
+        candle.title("Candle Stick")
+        view = CandleStick(candle)
         view.grid(row=0, column=0, padx=10, pady=10)
