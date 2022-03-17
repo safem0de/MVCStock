@@ -5,6 +5,7 @@ from tkinter.messagebox import showinfo
 from Models.StockDetails import *
 from Controllers.StockController import *
 from Controllers.AnalyseContoller import *
+from Controllers.CandleStickCotroller import *
 from Views.Analyse import *
 
 class MainMenu(ttk.Frame):
@@ -24,6 +25,7 @@ class MainMenu(ttk.Frame):
         super().__init__(parent)
 
         anlsCtrl = AnalyseContoller(self)
+        cdlsCtrl = CandleContoller(self)
 
         #create widgets
         self.labelheader = ttk.Label(self, text = 'SET100')
@@ -33,7 +35,7 @@ class MainMenu(ttk.Frame):
         self.FinanceDetails_btn = ttk.Button(self, text='Stock NEWS')
         self.FinanceDetails_btn.grid(row=1, column=0, padx=3, sticky=tk.EW)
 
-        self.StockDetails_btn = ttk.Button(self, text='CandleStick')
+        self.StockDetails_btn = ttk.Button(self, text='CandleStick', command=lambda:cdlsCtrl.openCandelStick())
         self.StockDetails_btn.grid(row=2, column=0, padx=3, sticky=tk.EW)
 
         self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:anlsCtrl.openAnalyseWindow())

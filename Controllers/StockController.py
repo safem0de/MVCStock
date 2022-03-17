@@ -63,6 +63,4 @@ class StockController:
     def StockStatementData(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         if not stockstatement.empty:
-            m = stockstatement.columns
-            print(m)
             return stockstatement.values.tolist()
