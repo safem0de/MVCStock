@@ -50,7 +50,7 @@ class StockController:
         stockstatement = self.StockStatement(StockDetail)
         listOfColumn = []
         if not stockstatement.empty:
-            tp = list(stockstatement)
+            tp = list(stockstatement.columns)
             for i in tp:
                 if "Unnamed" in str(i[0]): 
                     listOfColumn.append(str(i[1]))
@@ -63,4 +63,17 @@ class StockController:
     def StockStatementData(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         if not stockstatement.empty:
+            print(stockstatement)
             return stockstatement.values.tolist()
+
+
+    def testcreateusableDF(self,StockDetail):
+        data = self.StockStatementData(StockDetail)
+        col = self.StockStatementHeader(StockDetail) 
+        dfx = pd.DataFrame(data,columns = col)
+        print(type(dfx))
+        if not dfx.empty:
+            print(dfx.indexs)
+            rows = [0,9]
+            dfx = dfx.drop(rows, axis=0, inplace=True)
+        print(dfx)

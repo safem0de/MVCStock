@@ -17,6 +17,8 @@ class MainMenu(ttk.Frame):
     header = stockCtrl.StockHeader()
     set100 = stockCtrl.StockData()
 
+    test = stockCtrl.testcreateusableDF(stock)
+
     financial = stockCtrl.StockStatement(stock)
     fin_header = stockCtrl.StockStatementHeader(stock)
     fin_data = stockCtrl.StockStatementData(stock)
