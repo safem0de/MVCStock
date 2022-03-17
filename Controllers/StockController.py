@@ -52,12 +52,13 @@ class StockController:
                     listOfColumn.append(str(i[0]))
                 else:
                     listOfColumn.append(str(i[0]) +' '+str(i[1]))
-            print(listOfColumn)
+            # print(listOfColumn)
         return listOfColumn
 
     def StockStatementData(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         if not stockstatement.empty:
-            print("555")
+            print(stockstatement.values.tolist())
+            return stockstatement.values.tolist()
 
 
