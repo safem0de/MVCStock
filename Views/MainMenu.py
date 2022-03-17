@@ -4,11 +4,14 @@ from tkinter.messagebox import showinfo
 
 from Models.StockDetails import *
 from Controllers.StockController import *
+from Controllers.AnalyseContoller import *
+from Views.Analyse import *
 
 class MainMenu(ttk.Frame):
 
     stock = StockDetail()
     stockCtrl = StockController()
+
     status = stockCtrl.Intiallize()
     header = stockCtrl.StockHeader()
     set100 = stockCtrl.StockData()
@@ -20,22 +23,24 @@ class MainMenu(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
+        anlsCtrl = AnalyseContoller(self)
+
         #create widgets
         self.labelheader = ttk.Label(self, text = 'SET100')
         self.labelheader.grid(row=0, column=0, sticky=tk.W)
 
         #create button Menu
-        self.FinanceDetails_btn = ttk.Button(self, text='Financial Statement')
-        self.FinanceDetails_btn.grid(row=1, column=0, padx=3, sticky=tk.W)
+        self.FinanceDetails_btn = ttk.Button(self, text='Stock NEWS')
+        self.FinanceDetails_btn.grid(row=1, column=0, padx=3, sticky=tk.EW)
 
         self.StockDetails_btn = ttk.Button(self, text='CandleStick')
-        self.StockDetails_btn.grid(row=2, column=0, padx=3, sticky=tk.W)
+        self.StockDetails_btn.grid(row=2, column=0, padx=3, sticky=tk.EW)
 
-        self.StockAnalyse_btn = ttk.Button(self, text='Analyse')
-        self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.W)
+        self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:anlsCtrl.openAnalyseWindow())
+        self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.EW)
 
         self.labelfooter = ttk.Label(self, text = self.status)
-        self.labelfooter.grid(row=4, column=0, padx=3, sticky=tk.SW)
+        self.labelfooter.grid(row=40, column=0, padx=3, sticky=tk.S)
 
         # define columns
         columns = self.header
@@ -112,3 +117,4 @@ class MainMenu(ttk.Frame):
             scrollbar2 = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree2.yview)
             self.tree2.configure(yscroll=scrollbar2.set)
             scrollbar2.grid(row=21, column=2, rowspan=20, sticky=tk.NS)
+

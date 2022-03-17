@@ -32,7 +32,6 @@ class StockController:
                        , match="งวดงบการเงิน")
             df = dfstock[0]
             StockDetail.setMessage(f"{StockDetail.getStockName()} : {StockDetail.getCurrentPrice()}")
-            # print(type(df))
             return df
         else:
             StockDetail.setMessage("Not Valid StockName")
@@ -58,7 +57,5 @@ class StockController:
     def StockStatementData(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         if not stockstatement.empty:
-            print(stockstatement.values.tolist())
+            # print(stockstatement.values.tolist())
             return stockstatement.values.tolist()
-
-
