@@ -78,5 +78,4 @@ class StockController:
         # print(type(dfx))
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
-            print(modDfObj.head())
             return modDfObj
