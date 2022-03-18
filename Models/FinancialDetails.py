@@ -1,26 +1,26 @@
 class Financial:
 
-    def __init__(self) -> None:
+    def __init__(self) -> list:
         pass
 
-    __Assets = 0.00
-    __Liabilities = 0.00
-    __Equity = 0.00
-    __Capital = 0.00
-    __Revenue = 0.00
-    __Profit_Loss = 0.00
-    __NetProfit = 0.00
-    __EPS = 0.00
-    __ROA = 0.00
-    __ROE = 0.00
-    __Margin = 0.00
-    __LastPrice = 0.00
-    __MarketCap = 0.00
-    __FSPeriod = ""
-    __PE = 0.00
-    __PBV = 0.00
-    __BookValuepershare = 0.00
-    __DvdYield = 0.00
+    __Assets = {}
+    __Liabilities = {}
+    __Equity = {}
+    __Capital = {}
+    __Revenue = {}
+    __Profit_Loss = {}
+    __NetProfit = {}
+    __EPS = {}
+    __ROA = {}
+    __ROE = {}
+    __Margin = {}
+    __LastPrice = {}
+    __MarketCap = {}
+    __FSPeriod = {}
+    __PE = {}
+    __PBV = {}
+    __BookValuepershare = {}
+    __DvdYield = {}
 
     #Getters
     def getAssets(self):

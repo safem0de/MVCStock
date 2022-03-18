@@ -17,8 +17,6 @@ class MainMenu(ttk.Frame):
     header = stockCtrl.StockHeader()
     set100 = stockCtrl.StockData()
 
-    test = stockCtrl.testcreateusableDF(stock)
-
     financial = stockCtrl.StockStatement(stock)
     fin_header = stockCtrl.StockStatementHeader(stock)
     fin_data = stockCtrl.StockStatementData(stock)
@@ -28,6 +26,7 @@ class MainMenu(ttk.Frame):
 
         anlsCtrl = AnalyseContoller(self)
         cdlsCtrl = CandleContoller(self)
+        # test = anlsCtrl.testcreateusableDF(self.stock)
 
         #create widgets
         self.labelheader = ttk.Label(self, text = 'SET100')
@@ -103,7 +102,8 @@ class MainMenu(ttk.Frame):
 
         ### ------------------table2--------------------###
         def financialTable():
-            self.test = self.stockCtrl.testcreateusableDF(self.stock)
+            test = self.stockCtrl.PrepareDataToAnalyse(self.stock)
+            print(type(test))
             columns2 = self.fin_header
 
             self.tree2 = ttk.Treeview(self, columns=columns2, show='headings', name='financial')

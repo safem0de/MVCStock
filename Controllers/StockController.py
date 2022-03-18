@@ -67,12 +67,12 @@ class StockController:
         if not stockstatement.empty:
             return stockstatement.values.tolist()
 
-
-    def testcreateusableDF(self,StockDetail):
+    def PrepareDataToAnalyse(self,StockDetail):
         data = self.StockStatementData(StockDetail)
         col = self.StockStatementHeader(StockDetail) 
         dfx = pd.DataFrame(data,columns = col)
         print(type(dfx))
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
-            print(modDfObj)
+            print(modDfObj.head())
+            return modDfObj
