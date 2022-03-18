@@ -103,7 +103,7 @@ class MainMenu(ttk.Frame):
 
         ### ------------------table2--------------------###
         def financialTable():
-            
+            self.test = self.stockCtrl.testcreateusableDF(self.stock)
             columns2 = self.fin_header
 
             self.tree2 = ttk.Treeview(self, columns=columns2, show='headings', name='financial')

@@ -10,6 +10,7 @@ class StockController:
             self.__dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
                         , match="เครื่องหมาย" ,encoding='utf8')
             self.__stock = self.__dfsList[0]
+            self.__stock.fillna('-', inplace = True)
         except:
             pass
     
@@ -40,6 +41,7 @@ class StockController:
             dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + StockDetail.getStockName() + '&language=th&country=TH'
                        , match="งวดงบการเงิน")
             df = dfstock[0]
+            df.fillna('-', inplace = True)
             StockDetail.setMessage(f"{StockDetail.getStockName()} : {StockDetail.getCurrentPrice()}")
             return df
         else:
@@ -63,7 +65,6 @@ class StockController:
     def StockStatementData(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         if not stockstatement.empty:
-            print(stockstatement)
             return stockstatement.values.tolist()
 
 
@@ -73,7 +74,5 @@ class StockController:
         dfx = pd.DataFrame(data,columns = col)
         print(type(dfx))
         if not dfx.empty:
-            print(dfx.indexs)
-            rows = [0,9]
-            dfx = dfx.drop(rows, axis=0, inplace=True)
-        print(dfx)
+            modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
+            print(modDfObj)

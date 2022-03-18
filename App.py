@@ -9,6 +9,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Safem0de Stock')
+        self.geometry('+1200+0')
 
         # create a view and place it on the root window
         view = MainMenu(self)
