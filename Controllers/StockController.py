@@ -48,6 +48,8 @@ class StockController:
             StockDetail.setMessage("Not Valid StockName")
             return pd.DataFrame()
 
+    ## Substring Technic
+    ## https://www.freecodecamp.org/news/how-to-substring-a-string-in-python/
     def StockStatementHeader(self, StockDetail):
         stockstatement = self.StockStatement(StockDetail)
         listOfColumn = []
@@ -59,11 +61,12 @@ class StockController:
                     listOfColumn.append(str(ls[i][1]))
                 else:
                     if "Unnamed" in str(ls[i][0]): 
-                        listOfColumn.append(str(ls[i][1]))
+                        listOfColumn.append(str(ls[i][1])[-10:])
                     elif "Unnamed" in str(ls[1]): 
-                        listOfColumn.append(str(ls[i][0]))
+                        listOfColumn.append(str(ls[i][0])[-10:])
                     else:
-                        listOfColumn.append(str(ls[i][1]))
+                        listOfColumn.append(str(ls[i][1])[-10:])
+            # print(listOfColumn)
         return listOfColumn
 
     def StockStatementData(self, StockDetail):
@@ -75,7 +78,6 @@ class StockController:
         data = self.StockStatementData(StockDetail)
         col = self.StockStatementHeader(StockDetail) 
         dfx = pd.DataFrame(data,columns = col)
-        # print(type(dfx))
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
             return modDfObj

@@ -4,6 +4,7 @@ from tkinter.messagebox import showinfo
 
 from Models.StockDetails import *
 from Controllers.StockController import *
+
 from Controllers.AnalyseContoller import *
 from Controllers.CandleStickCotroller import *
 from Views.Analyse import *
