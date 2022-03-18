@@ -54,15 +54,16 @@ class StockController:
         if not stockstatement.empty:
             ls = list(stockstatement.columns)
             # print(ls)
-            for i in ls:
-                if "Unnamed" in str(i[0]): 
-                    listOfColumn.append(str(i[1]))
-                elif "Unnamed" in str(i[1]): 
-                    listOfColumn.append(str(i[0]))
+            for i in range(len(ls)):
+                if i == 0:
+                    listOfColumn.append(str(ls[i][1]))
                 else:
-                    listOfColumn.append(str(i[1]))
-                # else:
-                #     listOfColumn.append(str(i[0]) +' '+str(i[1]))
+                    if "Unnamed" in str(ls[i][0]): 
+                        listOfColumn.append(str(ls[i][1]))
+                    elif "Unnamed" in str(ls[1]): 
+                        listOfColumn.append(str(ls[i][0]))
+                    else:
+                        listOfColumn.append(str(ls[i][1]))
         return listOfColumn
 
     def StockStatementData(self, StockDetail):

@@ -3,8 +3,8 @@ from Views.CandleStick import *
 
 class CandleContoller:
 
-    def __init__(self,view):
-        self.view = view
+    def __init__(self):
+        pass
 
     def openCandelStick(self):
         candle = Toplevel()

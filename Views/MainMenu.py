@@ -24,8 +24,8 @@ class MainMenu(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        anlsCtrl = AnalyseContoller(self)
-        cdlsCtrl = CandleContoller(self)
+        anlsCtrl = AnalyseContoller()
+        cdlsCtrl = CandleContoller()
         # test = anlsCtrl.testcreateusableDF(self.stock)
 
         #create widgets
@@ -103,7 +103,7 @@ class MainMenu(ttk.Frame):
         ### ------------------table2--------------------###
         def financialTable():
             test = self.stockCtrl.PrepareDataToAnalyse(self.stock)
-            # print(type(test))
+            anlsCtrl.DataframeToModel(test)
             columns2 = self.fin_header
 
             self.tree2 = ttk.Treeview(self, columns=columns2, show='headings', name='financial')

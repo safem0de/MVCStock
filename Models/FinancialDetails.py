@@ -1,6 +1,6 @@
 class Financial:
 
-    def __init__(self) -> list:
+    def __init__(self) -> dict:
         pass
 
     __Assets = {}
