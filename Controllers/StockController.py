@@ -52,14 +52,17 @@ class StockController:
         stockstatement = self.StockStatement(StockDetail)
         listOfColumn = []
         if not stockstatement.empty:
-            tp = list(stockstatement.columns)
-            for i in tp:
+            ls = list(stockstatement.columns)
+            # print(ls)
+            for i in ls:
                 if "Unnamed" in str(i[0]): 
                     listOfColumn.append(str(i[1]))
                 elif "Unnamed" in str(i[1]): 
                     listOfColumn.append(str(i[0]))
                 else:
-                    listOfColumn.append(str(i[0]) +' '+str(i[1]))
+                    listOfColumn.append(str(i[1]))
+                # else:
+                #     listOfColumn.append(str(i[0]) +' '+str(i[1]))
         return listOfColumn
 
     def StockStatementData(self, StockDetail):
@@ -71,7 +74,7 @@ class StockController:
         data = self.StockStatementData(StockDetail)
         col = self.StockStatementHeader(StockDetail) 
         dfx = pd.DataFrame(data,columns = col)
-        print(type(dfx))
+        # print(type(dfx))
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
             print(modDfObj.head())
