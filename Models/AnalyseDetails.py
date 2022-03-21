@@ -3,6 +3,7 @@ class Financial:
     def __init__(self) -> dict:
         pass
 
+    __Name = ""
     __Assets = {}
     __Liabilities = {}
     __Equity = {}
@@ -23,6 +24,9 @@ class Financial:
     __DvdYield = {}
 
     #Getters
+    def getName(self):
+        return self.__Name
+
     def getAssets(self):
         return self.__Assets
 
@@ -78,6 +82,9 @@ class Financial:
         return self.__DvdYield
 
     #Setters
+    def setName(self, param):
+        self.__Name = param
+
     def setAssets(self, param):
         self.__Assets = param
 
@@ -99,35 +106,35 @@ class Financial:
     def setNetProfit(self, param):
         self.__NetProfit = param
 
-    def getEPS(self, param):
+    def setEPS(self, param):
         self.__EPS = param
 
-    def getROA(self, param):
+    def setROA(self, param):
         self.__ROA = param
 
-    def getROE(self, param):
+    def setROE(self, param):
         self.__ROE = param
 
-    def getMargin(self, param):
+    def setMargin(self, param):
         self.__Margin = param
 
-    def getLastPrice(self, param):
+    def setLastPrice(self, param):
         self.__LastPrice = param
 
-    def getMarketCap(self, param):
+    def setMarketCap(self, param):
         self.__MarketCap = param
 
-    def getFSPeriod(self, param):
+    def setFSPeriod(self, param):
         self.__FSPeriod = param
 
-    def getEPS(self, param):
+    def setEPS(self, param):
         self.__PE = param
 
-    def getPE(self, param):
+    def setPE(self, param):
         self.__PBV = param
 
-    def getBookValuepershare(self, param):
+    def setBookValuepershare(self, param):
         self.__BookValuepershare = param
 
-    def getDvdYield(self, param):
+    def setDvdYield(self, param):
         self.__DvdYield = param

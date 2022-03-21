@@ -98,7 +98,7 @@ class StockController:
         # col = self.StockStatementHeader(StockDetail)
         data = self.StockStatementData(df)
         col = self.StockStatementHeader(df)
-        result  = [col[i] if i==0 else col[i][-4:] for i in range(len(col))]
+        result  = [col[i] if i==0 else col[i][-2:] for i in range(len(col))]
         dfx = pd.DataFrame(data,columns = result)
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
