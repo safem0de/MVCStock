@@ -36,7 +36,7 @@ class StockController:
             return True
         return False
 
-    def StockStatement(self, StockDetail):
+    def StockStatement(self, StockDetail) -> pd.DataFrame:
         if self.__isVaildStock(StockDetail):
             dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + StockDetail.getStockName() + '&language=th&country=TH'
                        , match="งวดงบการเงิน")
@@ -48,10 +48,20 @@ class StockController:
             StockDetail.setMessage("Not Valid StockName")
             return pd.DataFrame()
 
+    def StockStatementDataFrame(self, x) -> pd.DataFrame:
+        if len(x) > 0:
+            dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + x + '&language=th&country=TH'
+                       , match="งวดงบการเงิน")
+            df = dfstock[0]
+            df.fillna('-', inplace = True)
+            return df
+        return pd.DataFrame()
+
     ## Substring Technic
     ## https://www.freecodecamp.org/news/how-to-substring-a-string-in-python/
-    def StockStatementHeader(self, StockDetail):
-        stockstatement = self.StockStatement(StockDetail)
+    def StockStatementHeader(self, df) -> list:
+        # stockstatement = self.StockStatement(StockDetail)
+        stockstatement = df
         listOfColumn = []
         if not stockstatement.empty:
             ls = list(stockstatement.columns)
@@ -69,15 +79,31 @@ class StockController:
             # print(listOfColumn)
         return listOfColumn
 
-    def StockStatementData(self, StockDetail):
-        stockstatement = self.StockStatement(StockDetail)
+    def StockStatementData(self, df) -> list:
+        # stockstatement = self.StockStatement(StockDetail)
+        stockstatement = df
         if not stockstatement.empty:
             return stockstatement.values.tolist()
+        return list()
 
-    def PrepareDataToAnalyse(self,StockDetail):
-        data = self.StockStatementData(StockDetail)
-        col = self.StockStatementHeader(StockDetail) 
-        dfx = pd.DataFrame(data,columns = col)
+    def getSET100Name(self):
+        if not self.__stock.empty:
+            StkList = self.__stock['หลักทรัพย์'].to_list()
+            return StkList
+
+    # https://towardsdatascience.com/a-gentle-introduction-to-flow-control-loops-and-list-comprehensions-for-beginners-3dbaabd7cd8a
+    # [output if condition else output for l in list]
+    def PrepareDataToAnalyse(self,df):
+        # data = self.StockStatementData(StockDetail)8
+        # col = self.StockStatementHeader(StockDetail)
+        data = self.StockStatementData(df)
+        col = self.StockStatementHeader(df)
+        result  = [col[i] if i==0 else col[i][-4:] for i in range(len(col))]
+        dfx = pd.DataFrame(data,columns = result)
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
             return modDfObj
+        return pd.DataFrame()
+
+    def growthStock(self,df):
+        pass

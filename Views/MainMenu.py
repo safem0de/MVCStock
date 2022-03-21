@@ -18,9 +18,9 @@ class MainMenu(ttk.Frame):
     header = stockCtrl.StockHeader()
     set100 = stockCtrl.StockData()
 
-    financial = stockCtrl.StockStatement(stock)
-    fin_header = stockCtrl.StockStatementHeader(stock)
-    fin_data = stockCtrl.StockStatementData(stock)
+    # financial = stockCtrl.StockStatement(stock)
+    # fin_header = stockCtrl.StockStatementHeader(stock)
+    # fin_data = stockCtrl.StockStatementData(stock)
 
     def __init__(self, parent):
         super().__init__(parent)
@@ -40,7 +40,7 @@ class MainMenu(ttk.Frame):
         self.StockDetails_btn = ttk.Button(self, text='CandleStick', command=lambda:cdlsCtrl.openCandelStick())
         self.StockDetails_btn.grid(row=2, column=0, padx=3, sticky=tk.EW)
 
-        self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:anlsCtrl.openAnalyseWindow())
+        self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:BtnAnalyseClick())
         self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.EW)
 
         self.labelfooter = ttk.Label(self, text = self.status)
@@ -84,11 +84,11 @@ class MainMenu(ttk.Frame):
                 self.stock.setSalePrice(record[9])
                 self.stock.setVolume(record[10])
                 self.stock.setValue(record[11])
-                print(self.stock.getStockName())
-                self.financial = self.stockCtrl.StockStatement(self.stock)
-                self.fin_header = self.stockCtrl.StockStatementHeader(self.stock)
-                self.fin_data = self.stockCtrl.StockStatementData(self.stock)
-                showinfo(title='Information', message=self.stock.getMessage())
+                # print(self.stock.getStockName())
+                # self.financial = self.stockCtrl.StockStatement(self.stock)
+                # self.fin_header = self.stockCtrl.StockStatementHeader(self.stock)
+                # self.fin_data = self.stockCtrl.StockStatementData(self.stock)
+                # showinfo(title='Information', message=self.stock.getMessage())
                 financialTable()
 
         self.tree.bind('<<TreeviewSelect>>', item_selected)
@@ -103,9 +103,15 @@ class MainMenu(ttk.Frame):
 
         ### ------------------table2--------------------###
         def financialTable():
-            test = self.stockCtrl.PrepareDataToAnalyse(self.stock)
-            anlsCtrl.DataframeToModel(test)
-            columns2 = self.fin_header
+            # test = self.stockCtrl.PrepareDataToAnalyse(self.stock)
+            # anlsCtrl.DataframeToModel(test)
+
+            financial = self.stockCtrl.StockStatement(self.stock)
+            fin_header = self.stockCtrl.StockStatementHeader(financial)
+            fin_data = self.stockCtrl.StockStatementData(financial)
+
+            # columns2 = self.fin_header
+            columns2 = fin_header
 
             self.tree2 = ttk.Treeview(self, columns=columns2, show='headings', name='financial')
             
@@ -113,7 +119,8 @@ class MainMenu(ttk.Frame):
                 self.tree2.heading(col2, text = col2)
                 self.tree2.column(col2, minwidth=0, width=160, stretch=False)
 
-            for data in self.fin_data:
+            # for data in self.fin_data:
+            for data in fin_data:
                 self.tree2.insert('', tk.END, values=data)
 
             self.tree2.grid(row=21, column=1, sticky=tk.NS)
@@ -123,3 +130,10 @@ class MainMenu(ttk.Frame):
             self.tree2.configure(yscroll=scrollbar2.set)
             scrollbar2.grid(row=21, column=2, rowspan=20, sticky=tk.NS)
 
+        def BtnAnalyseClick():
+            SETfucking100 = self.stockCtrl.getSET100Name()
+            for i in SETfucking100:
+                stock = self.stockCtrl.StockStatementDataFrame(i)
+                test = self.stockCtrl.PrepareDataToAnalyse(stock)
+            anlsCtrl.openAnalyseWindow()
+            
