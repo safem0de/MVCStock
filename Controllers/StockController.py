@@ -2,6 +2,7 @@ from Controllers.Connections import *
 from Models.StockDetails import *
 
 import pandas as pd
+import asyncio
 
 class StockController:
 
@@ -86,7 +87,7 @@ class StockController:
             return stockstatement.values.tolist()
         return list()
 
-    def getSET100Name(self):
+    def getSET100Name(self) -> list:
         if not self.__stock.empty:
             StkList = self.__stock['หลักทรัพย์'].to_list()
             return StkList

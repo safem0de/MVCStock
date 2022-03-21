@@ -1,9 +1,8 @@
 class Financial:
 
-    def __init__(self) -> dict:
+    def __init__(self):
         pass
 
-    __Name = ""
     __Assets = {}
     __Liabilities = {}
     __Equity = {}
@@ -24,9 +23,6 @@ class Financial:
     __DvdYield = {}
 
     #Getters
-    def getName(self):
-        return self.__Name
-
     def getAssets(self):
         return self.__Assets
 
@@ -82,9 +78,6 @@ class Financial:
         return self.__DvdYield
 
     #Setters
-    def setName(self, param):
-        self.__Name = param
-
     def setAssets(self, param):
         self.__Assets = param
 
@@ -100,7 +93,7 @@ class Financial:
     def setRevenue(self, param):
         self.__Revenue = param
 
-    def getProfit_Loss(self, param):
+    def setProfit_Loss(self, param):
         self.__Profit_Loss = param
 
     def setNetProfit(self, param):
@@ -127,10 +120,10 @@ class Financial:
     def setFSPeriod(self, param):
         self.__FSPeriod = param
 
-    def setEPS(self, param):
+    def setPE(self, param):
         self.__PE = param
 
-    def setPE(self, param):
+    def setPBV(self, param):
         self.__PBV = param
 
     def setBookValuepershare(self, param):

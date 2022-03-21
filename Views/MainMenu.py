@@ -5,7 +5,10 @@ from tkinter.messagebox import showinfo
 from Models.StockDetails import *
 from Controllers.StockController import *
 
+from Models.AnalyseDetails import *
 from Controllers.AnalyseContoller import *
+
+
 from Controllers.CandleStickCotroller import *
 from Views.Analyse import *
 
@@ -131,9 +134,37 @@ class MainMenu(ttk.Frame):
             scrollbar2.grid(row=21, column=2, rowspan=20, sticky=tk.NS)
 
         def BtnAnalyseClick():
+            x = Financial()
+            dictOfSET100 = {}
             SETfucking100 = self.stockCtrl.getSET100Name()
             for i in SETfucking100:
+                # print(i)
+                analyseModel = Financial()
                 stock = self.stockCtrl.StockStatementDataFrame(i)
                 test = self.stockCtrl.PrepareDataToAnalyse(stock)
+                cln = anlsCtrl.DataframeToModel(test)
+                # print(cln)
+                analyseModel.setAssets(cln['สินทรัพย์รวม'])
+                analyseModel.setLiabilities(cln['หนี้สินรวม'])
+                analyseModel.setEquity(cln['ส่วนของผู้ถือหุ้น'])
+                analyseModel.setCapital(cln['มูลค่าหุ้นที่เรียกชำระแล้ว'])
+                analyseModel.setRevenue(cln['รายได้รวม'])
+                analyseModel.setProfit_Loss(cln['กำไร (ขาดทุน) จากกิจกรรมอื่น'])
+                analyseModel.setNetProfit(cln['กำไรสุทธิ'])
+                analyseModel.setEPS(cln['กำไรต่อหุ้น (บาท)'])
+                analyseModel.setROA(cln['ROA(%)'])
+                analyseModel.setROE(cln['ROE(%)'])
+                analyseModel.setMargin(cln['อัตรากำไรสุทธิ(%)'])
+                analyseModel.setLastPrice(cln['ราคาล่าสุด(บาท)'])
+                analyseModel.setMarketCap(cln['มูลค่าหลักทรัพย์ตามราคาตลาด'])
+                analyseModel.setFSPeriod(cln['วันที่ของงบการเงินที่ใช้คำนวณค่าสถิติ'])
+                analyseModel.setPE(cln['P/E (เท่า)'])
+                analyseModel.setPBV(cln['P/BV (เท่า)'])
+                analyseModel.setBookValuepershare(cln['มูลค่าหุ้นทางบัญชีต่อหุ้น (บาท)'])
+                analyseModel.setDvdYield(cln['อัตราส่วนเงินปันผลตอบแทน(%)'])
+                dictOfSET100[i] = analyseModel
+            
+            x = dictOfSET100.get("ACE")
+            print(x.getAssets())
             anlsCtrl.openAnalyseWindow()
             
