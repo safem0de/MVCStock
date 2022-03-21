@@ -2,7 +2,6 @@ from Controllers.Connections import *
 from Models.StockDetails import *
 
 import pandas as pd
-import asyncio
 
 class StockController:
 
@@ -50,6 +49,15 @@ class StockController:
             return pd.DataFrame()
 
     def StockStatementDataFrame(self, x) -> pd.DataFrame:
+        if len(x) > 0:
+            dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + x + '&language=th&country=TH'
+                       , match="งวดงบการเงิน")
+            df = dfstock[0]
+            df.fillna('-', inplace = True)
+            return df
+        return pd.DataFrame()
+
+    async def StockStatementDataFrame(self, x) -> pd.DataFrame:
         if len(x) > 0:
             dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + x + '&language=th&country=TH'
                        , match="งวดงบการเงิน")

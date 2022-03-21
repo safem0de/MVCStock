@@ -2,6 +2,8 @@ from tkinter import ttk
 import tkinter as tk
 from tkinter.messagebox import showinfo
 
+import asyncio
+
 from Models.StockDetails import *
 from Controllers.StockController import *
 
@@ -43,7 +45,7 @@ class MainMenu(ttk.Frame):
         self.StockDetails_btn = ttk.Button(self, text='CandleStick', command=lambda:cdlsCtrl.openCandelStick())
         self.StockDetails_btn.grid(row=2, column=0, padx=3, sticky=tk.EW)
 
-        self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:BtnAnalyseClick())
+        self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:asyncio.run(BtnAnalyseClick()))
         self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.EW)
 
         self.labelfooter = ttk.Label(self, text = self.status)
@@ -133,38 +135,43 @@ class MainMenu(ttk.Frame):
             self.tree2.configure(yscroll=scrollbar2.set)
             scrollbar2.grid(row=21, column=2, rowspan=20, sticky=tk.NS)
 
-        def BtnAnalyseClick():
-            x = Financial()
-            dictOfSET100 = {}
+        # def BtnAnalyseClick():
+        #     x = Financial()
+        #     dictOfSET100 = {}
+        #     SETfucking100 = self.stockCtrl.getSET100Name()
+        #     for i in SETfucking100:
+        #         # print(i)
+        #         analyseModel = Financial()
+        #         stock = self.stockCtrl.StockStatementDataFrame(i)
+        #         test = self.stockCtrl.PrepareDataToAnalyse(stock)
+        #         cln = anlsCtrl.DataframeToModel(test)
+        #         # print(cln)
+        #         analyseModel.setAssets(cln['สินทรัพย์รวม'])
+        #         analyseModel.setLiabilities(cln['หนี้สินรวม'])
+        #         analyseModel.setEquity(cln['ส่วนของผู้ถือหุ้น'])
+        #         analyseModel.setCapital(cln['มูลค่าหุ้นที่เรียกชำระแล้ว'])
+        #         analyseModel.setRevenue(cln['รายได้รวม'])
+        #         analyseModel.setProfit_Loss(cln['กำไร (ขาดทุน) จากกิจกรรมอื่น'])
+        #         analyseModel.setNetProfit(cln['กำไรสุทธิ'])
+        #         analyseModel.setEPS(cln['กำไรต่อหุ้น (บาท)'])
+        #         analyseModel.setROA(cln['ROA(%)'])
+        #         analyseModel.setROE(cln['ROE(%)'])
+        #         analyseModel.setMargin(cln['อัตรากำไรสุทธิ(%)'])
+        #         analyseModel.setLastPrice(cln['ราคาล่าสุด(บาท)'])
+        #         analyseModel.setMarketCap(cln['มูลค่าหลักทรัพย์ตามราคาตลาด'])
+        #         analyseModel.setFSPeriod(cln['วันที่ของงบการเงินที่ใช้คำนวณค่าสถิติ'])
+        #         analyseModel.setPE(cln['P/E (เท่า)'])
+        #         analyseModel.setPBV(cln['P/BV (เท่า)'])
+        #         analyseModel.setBookValuepershare(cln['มูลค่าหุ้นทางบัญชีต่อหุ้น (บาท)'])
+        #         analyseModel.setDvdYield(cln['อัตราส่วนเงินปันผลตอบแทน(%)'])
+        #         dictOfSET100[i] = analyseModel
+            
+        #     x = dictOfSET100.get("ACE")
+        #     print(x.getAssets())
+        #     anlsCtrl.openAnalyseWindow()
+
+        async def BtnAnalyseClick():
             SETfucking100 = self.stockCtrl.getSET100Name()
-            for i in SETfucking100:
-                # print(i)
-                analyseModel = Financial()
-                stock = self.stockCtrl.StockStatementDataFrame(i)
-                test = self.stockCtrl.PrepareDataToAnalyse(stock)
-                cln = anlsCtrl.DataframeToModel(test)
-                # print(cln)
-                analyseModel.setAssets(cln['สินทรัพย์รวม'])
-                analyseModel.setLiabilities(cln['หนี้สินรวม'])
-                analyseModel.setEquity(cln['ส่วนของผู้ถือหุ้น'])
-                analyseModel.setCapital(cln['มูลค่าหุ้นที่เรียกชำระแล้ว'])
-                analyseModel.setRevenue(cln['รายได้รวม'])
-                analyseModel.setProfit_Loss(cln['กำไร (ขาดทุน) จากกิจกรรมอื่น'])
-                analyseModel.setNetProfit(cln['กำไรสุทธิ'])
-                analyseModel.setEPS(cln['กำไรต่อหุ้น (บาท)'])
-                analyseModel.setROA(cln['ROA(%)'])
-                analyseModel.setROE(cln['ROE(%)'])
-                analyseModel.setMargin(cln['อัตรากำไรสุทธิ(%)'])
-                analyseModel.setLastPrice(cln['ราคาล่าสุด(บาท)'])
-                analyseModel.setMarketCap(cln['มูลค่าหลักทรัพย์ตามราคาตลาด'])
-                analyseModel.setFSPeriod(cln['วันที่ของงบการเงินที่ใช้คำนวณค่าสถิติ'])
-                analyseModel.setPE(cln['P/E (เท่า)'])
-                analyseModel.setPBV(cln['P/BV (เท่า)'])
-                analyseModel.setBookValuepershare(cln['มูลค่าหุ้นทางบัญชีต่อหุ้น (บาท)'])
-                analyseModel.setDvdYield(cln['อัตราส่วนเงินปันผลตอบแทน(%)'])
-                dictOfSET100[i] = analyseModel
-            
-            x = dictOfSET100.get("ACE")
-            print(x.getAssets())
-            anlsCtrl.openAnalyseWindow()
-            
+            coros = [self.stockCtrl.StockStatementDataFrame(l) for l in SETfucking100]
+            result = await asyncio.gather(*coros)
+            print(result)
