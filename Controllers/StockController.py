@@ -1,3 +1,5 @@
+from turtle import st
+from unicodedata import name
 from Controllers.Connections import *
 from Models.StockDetails import *
 
@@ -42,6 +44,7 @@ class StockController:
                        , match="งวดงบการเงิน")
             df = dfstock[0]
             df.fillna('-', inplace = True)
+            df.Name = StockDetail.getStockName()
             StockDetail.setMessage(f"{StockDetail.getStockName()} : {StockDetail.getCurrentPrice()}")
             return df
         else:
@@ -54,15 +57,7 @@ class StockController:
                        , match="งวดงบการเงิน")
             df = dfstock[0]
             df.fillna('-', inplace = True)
-            return df
-        return pd.DataFrame()
-
-    async def StockStatementDataFrame(self, x) -> pd.DataFrame:
-        if len(x) > 0:
-            dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + x + '&language=th&country=TH'
-                       , match="งวดงบการเงิน")
-            df = dfstock[0]
-            df.fillna('-', inplace = True)
+            df.Name = x
             return df
         return pd.DataFrame()
 
@@ -77,7 +72,7 @@ class StockController:
             # print(ls)
             for i in range(len(ls)):
                 if i == 0:
-                    listOfColumn.append(str(ls[i][1]))
+                    listOfColumn.append(df.Name)
                 else:
                     if "Unnamed" in str(ls[i][0]): 
                         listOfColumn.append(str(ls[i][1])[-10:])
@@ -92,25 +87,36 @@ class StockController:
         # stockstatement = self.StockStatement(StockDetail)
         stockstatement = df
         if not stockstatement.empty:
+            stockstatement
             return stockstatement.values.tolist()
         return list()
 
-    def getSET100Name(self) -> list:
+    async def getSET100Name(self) -> list:
         if not self.__stock.empty:
             StkList = self.__stock['หลักทรัพย์'].to_list()
             return StkList
 
+
+    async def StockStatementDataFrame(self, x) -> pd.DataFrame:
+        if len(x) > 0:
+            dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + x + '&language=th&country=TH'
+                       , match="งวดงบการเงิน")
+            df = dfstock[0]
+            df.fillna('-', inplace = True)
+            df.Name = x
+            return df
+        return pd.DataFrame()
+
     # https://towardsdatascience.com/a-gentle-introduction-to-flow-control-loops-and-list-comprehensions-for-beginners-3dbaabd7cd8a
     # [output if condition else output for l in list]
-    def PrepareDataToAnalyse(self,df):
-        # data = self.StockStatementData(StockDetail)8
-        # col = self.StockStatementHeader(StockDetail)
+    async def PrepareDataToAnalyse(self,df):
         data = self.StockStatementData(df)
         col = self.StockStatementHeader(df)
-        result  = [col[i] if i==0 else col[i][-2:] for i in range(len(col))]
-        dfx = pd.DataFrame(data,columns = result)
+        col_result  = [col[0] if i==0 else col[i][-2:] for i in range(len(col))]
+        dfx = pd.DataFrame(data,columns = col_result)
         if not dfx.empty:
             modDfObj = dfx.drop([dfx.index[0] , dfx.index[9]])
+            modDfObj.Name = col_result[0]
             return modDfObj
         return pd.DataFrame()
 

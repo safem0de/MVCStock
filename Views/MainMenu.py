@@ -1,8 +1,9 @@
+from multiprocessing.sharedctypes import Value
 from tkinter import ttk
 import tkinter as tk
 from tkinter.messagebox import showinfo
 
-import asyncio
+import asyncio, time
 
 from Models.StockDetails import *
 from Controllers.StockController import *
@@ -32,6 +33,7 @@ class MainMenu(ttk.Frame):
 
         anlsCtrl = AnalyseContoller()
         cdlsCtrl = CandleContoller()
+
         # test = anlsCtrl.testcreateusableDF(self.stock)
 
         #create widgets
@@ -147,7 +149,7 @@ class MainMenu(ttk.Frame):
         #         cln = anlsCtrl.DataframeToModel(test)
         #         # print(cln)
         #         analyseModel.setAssets(cln['สินทรัพย์รวม'])
-        #         analyseModel.setLiabilities(cln['หนี้สินรวม'])
+        #         analyseModel.setLiabilities(cln['หนี้สินรวม']
         #         analyseModel.setEquity(cln['ส่วนของผู้ถือหุ้น'])
         #         analyseModel.setCapital(cln['มูลค่าหุ้นที่เรียกชำระแล้ว'])
         #         analyseModel.setRevenue(cln['รายได้รวม'])
@@ -170,8 +172,14 @@ class MainMenu(ttk.Frame):
         #     print(x.getAssets())
         #     anlsCtrl.openAnalyseWindow()
 
+        # https://stackoverflow.com/questions/42231161/asyncio-gather-vs-asyncio-wait
+        # https://stackoverflow.com/questions/14535730/what-does-hashable-mean-in-python
         async def BtnAnalyseClick():
-            SETfucking100 = self.stockCtrl.getSET100Name()
-            coros = [self.stockCtrl.StockStatementDataFrame(l) for l in SETfucking100]
-            result = await asyncio.gather(*coros)
-            print(result)
+            __SETfucking100 = await self.stockCtrl.getSET100Name()
+            __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
+            __prepared_df = [await self.stockCtrl.PrepareDataToAnalyse(l) for l in __df_stock]
+            __dict_cleaned = {l.Name : await anlsCtrl.DataframeToModel(l) for l in __prepared_df}
+            p = [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
+            print(p, sep='\n')
+
+            anlsCtrl.openAnalyseWindow()
