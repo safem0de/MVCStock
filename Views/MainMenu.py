@@ -175,11 +175,12 @@ class MainMenu(ttk.Frame):
         # https://stackoverflow.com/questions/42231161/asyncio-gather-vs-asyncio-wait
         # https://stackoverflow.com/questions/14535730/what-does-hashable-mean-in-python
         async def BtnAnalyseClick():
+            fin = Financial()
             __SETfucking100 = await self.stockCtrl.getSET100Name()
             __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
             __prepared_df = [await self.stockCtrl.PrepareDataToAnalyse(l) for l in __df_stock]
             __dict_cleaned = {l.Name : await anlsCtrl.DataframeToModel(l) for l in __prepared_df}
             p = [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
-            print(p, sep='\n')
 
             anlsCtrl.openAnalyseWindow()
+            anlsCtrl.calculateGrowth(fin)

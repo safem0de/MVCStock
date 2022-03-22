@@ -15,6 +15,9 @@ class AnalyseContoller:
         view = StockAnalyse(analyse)
         view.grid(row=0, column=0, padx=10, pady=10)
 
+    def __isValid_SET100_dict(self,__dictOfSET100):
+        return bool(__dictOfSET100)
+
     async def DataframeToModel(self,df):
         cleanDatas = {}
         for row_index,row in df.iterrows():
@@ -22,8 +25,8 @@ class AnalyseContoller:
             cleanDatas[row[0]] = m.to_dict()
         return cleanDatas
 
-    async def setAllData(self,i,data) -> dict:
-        dictOfSET100 = {}
+    async def setAllData(self,i,data):
+        __dictOfSET100 = {}
         analyseModel = Financial()
         analyseModel.setAssets(data['สินทรัพย์รวม'])
         analyseModel.setLiabilities(data['หนี้สินรวม'])
@@ -43,8 +46,15 @@ class AnalyseContoller:
         analyseModel.setPBV(data['P/BV (เท่า)'])
         analyseModel.setBookValuepershare(data['มูลค่าหุ้นทางบัญชีต่อหุ้น (บาท)'])
         analyseModel.setDvdYield(data['อัตราส่วนเงินปันผลตอบแทน(%)'])
-        dictOfSET100[i] = analyseModel
-        return dictOfSET100
+        __dictOfSET100[i] = analyseModel
+        return __dictOfSET100
+
+    def calculateGrowth(self, financials):
+        financials = self.__dictOfSET100.get("ACE")
+        print(financials.getAssets())
+
+
+        
 
     
 
