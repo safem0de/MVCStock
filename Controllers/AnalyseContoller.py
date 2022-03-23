@@ -1,3 +1,5 @@
+from multiprocessing import Value
+from operator import le
 from tkinter import Toplevel
 from Views.Analyse import *
 from Models.AnalyseDetails import *
@@ -49,15 +51,37 @@ class AnalyseContoller:
         analyseModel.setDvdYield(data['อัตราส่วนเงินปันผลตอบแทน(%)'])
         self.__dictOfSET100[i] = analyseModel
 
+    # https://realpython.com/iterate-through-dictionary-python/
+    # https://www.w3schools.com/python/python_dictionaries_access.asp
     def calculateGrowth(self, financials):
-        x = self.__dictOfSET100
-        print(type(x.get('ACE')))
-        financials = x.get('ACE')
-        print(financials.getAssets())
+        cal = self.__dictOfSET100
+        for c in cal:
+            financials = cal.get(c)
+            growthAsset = financials.getAssets()
+            print(c)
+            # x = [int(key) for key in sorted(growthAsset, reverse=True) if not growthAsset[key] == "-"]
+            # y = [float(growthAsset[key]) for key in sorted(growthAsset, reverse=True) if not growthAsset[key] == "-"]
+            # print(x,y)
+            year = []
+            asset = []
+            for key in sorted(growthAsset, reverse=True):
+                if not growthAsset[key] == "-":
+                    # year_asset[int(key)] = float(growthAsset[key])
+                    year.append(int(key))
+                    asset.append(float(growthAsset[key]))
 
+            year_asset = list(zip(year,asset))
+            # print(year_asset)
+            res_growth = []
+            for i in range(len(year_asset)):
+                if i+1 < len(year_asset):
+                    print(f"((สินทรัพย์ปี {year_asset[i][0]} - สินทรัพย์ปี {year_asset[i+1][0]})/ สินทรัพย์ปี {year_asset[i+1][0]})*100")
+                    print("อัตราการเติบโตของทรัพย์สิน (ต่อปี)")
+                    x = ((year_asset[i][1]-year_asset[i+1][1])/year_asset[i+1][1])*100
+                    if len(res_growth) < 3:
+                        res_growth.append(x)
+            
+            print(res_growth)
+            print(len(res_growth))
+            print(sum(res_growth)/len(res_growth))
 
-        
-
-    
-
-    
