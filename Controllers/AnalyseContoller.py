@@ -6,6 +6,8 @@ import pandas as pd
 
 class AnalyseContoller:
 
+    __dictOfSET100 = {}
+
     def __init__(self):
         pass
 
@@ -15,8 +17,8 @@ class AnalyseContoller:
         view = StockAnalyse(analyse)
         view.grid(row=0, column=0, padx=10, pady=10)
 
-    def __isValid_SET100_dict(self,__dictOfSET100):
-        return bool(__dictOfSET100)
+    def isValid_SET100_dict(self):
+        return bool(self.__dictOfSET100)
 
     async def DataframeToModel(self,df):
         cleanDatas = {}
@@ -26,7 +28,6 @@ class AnalyseContoller:
         return cleanDatas
 
     async def setAllData(self,i,data):
-        __dictOfSET100 = {}
         analyseModel = Financial()
         analyseModel.setAssets(data['สินทรัพย์รวม'])
         analyseModel.setLiabilities(data['หนี้สินรวม'])
@@ -46,11 +47,12 @@ class AnalyseContoller:
         analyseModel.setPBV(data['P/BV (เท่า)'])
         analyseModel.setBookValuepershare(data['มูลค่าหุ้นทางบัญชีต่อหุ้น (บาท)'])
         analyseModel.setDvdYield(data['อัตราส่วนเงินปันผลตอบแทน(%)'])
-        __dictOfSET100[i] = analyseModel
-        return __dictOfSET100
+        self.__dictOfSET100[i] = analyseModel
 
     def calculateGrowth(self, financials):
-        financials = self.__dictOfSET100.get("ACE")
+        x = self.__dictOfSET100
+        print(type(x.get('ACE')))
+        financials = x.get('ACE')
         print(financials.getAssets())
 
 

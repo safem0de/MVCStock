@@ -180,7 +180,10 @@ class MainMenu(ttk.Frame):
             __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
             __prepared_df = [await self.stockCtrl.PrepareDataToAnalyse(l) for l in __df_stock]
             __dict_cleaned = {l.Name : await anlsCtrl.DataframeToModel(l) for l in __prepared_df}
-            p = [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
+            if not anlsCtrl.isValid_SET100_dict():
+                [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
+                print("No Memories")
 
             anlsCtrl.openAnalyseWindow()
             anlsCtrl.calculateGrowth(fin)
+
