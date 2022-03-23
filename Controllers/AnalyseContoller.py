@@ -1,5 +1,6 @@
 from multiprocessing import Value
 from operator import le
+
 from tkinter import Toplevel
 from Views.Analyse import *
 from Models.AnalyseDetails import *
@@ -51,6 +52,25 @@ class AnalyseContoller:
         analyseModel.setDvdYield(data['อัตราส่วนเงินปันผลตอบแทน(%)'])
         self.__dictOfSET100[i] = analyseModel
 
+
+    def deleteMinusProfit(self, financials):
+        cal = self.__dictOfSET100
+        removal_list = []
+        for c in cal:
+            financials = cal.get(c)
+            netprofit = financials.getNetProfit()
+            for key in list(netprofit):
+                if not netprofit[key] == "-":
+                    if float(netprofit[key]) < 0:
+                        if not c in removal_list:
+                            removal_list.append(c)
+
+        for l in removal_list:
+            cal.pop(l)
+
+        self.__dictOfSET100 = cal
+
+
     # https://realpython.com/iterate-through-dictionary-python/
     # https://www.w3schools.com/python/python_dictionaries_access.asp
     def calculateGrowth(self, financials):
@@ -81,7 +101,5 @@ class AnalyseContoller:
                     if len(res_growth) < 3:
                         res_growth.append(x)
             
-            print(res_growth)
-            print(len(res_growth))
-            print(sum(res_growth)/len(res_growth))
+            print(int(sum(res_growth)/len(res_growth)))
 
