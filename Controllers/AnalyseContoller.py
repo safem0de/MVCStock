@@ -1,6 +1,3 @@
-from multiprocessing import Value
-from operator import le
-
 from tkinter import Toplevel
 from Views.Analyse import *
 from Models.AnalyseDetails import *
