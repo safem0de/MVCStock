@@ -74,21 +74,36 @@ class AnalyseContoller:
 
     # https://realpython.com/iterate-through-dictionary-python/
     # https://www.w3schools.com/python/python_dictionaries_access.asp
-    def calculateGrowth(self, financials):
+    def calculateGrowth(self, financials, datatype):
         all_average_growth = []
         removal_list = []
         average_growth = 0
         cal = self.__dictOfSET100
         for c in cal:
             financials = cal.get(c)
-            growthAsset = financials.getAssets()
+            if datatype == "asset":
+                growthtype = financials.getAssets()
+            elif datatype == "revenue":
+                growthtype = financials.getRevenue()
+            elif datatype == "netprofit":
+                growthtype = financials.getNetProfit()
+            elif datatype == "roe":
+                growthtype = financials.getROE()
+            elif datatype == "pe":
+                growthtype = financials.getPE()
+            elif datatype == "pbv":
+                growthtype = financials.getPBV()
+            elif datatype == "eps":
+                growthtype = financials.getEPS()
+            else:
+                growthtype = financials.getAssets()
 
             year = []
             asset = []
-            for key in sorted(growthAsset, reverse=True):
-                if not growthAsset[key] == "-":
+            for key in sorted(growthtype, reverse=True):
+                if not growthtype[key] == "-":
                     year.append(int(key))
-                    asset.append(float(growthAsset[key]))
+                    asset.append(float(growthtype[key]))
 
             year_asset = list(zip(year,asset))
             res_growth = []
@@ -101,13 +116,13 @@ class AnalyseContoller:
                     if len(res_growth) < 3:
                         res_growth.append(round(x,3))
 
-            print(c)
-            print(res_growth)
+            # print(c)
+            # print(res_growth)
             all_average_growth.append(round(sum(res_growth)/len(res_growth),3))
             removal_list.append([c,round(sum(res_growth)/len(res_growth),3)])
             
         average_growth = round(sum(all_average_growth)/len(all_average_growth),3)
-        print(average_growth)
+        print(datatype, average_growth)
 
         for l in removal_list:
             if l[1] < average_growth:

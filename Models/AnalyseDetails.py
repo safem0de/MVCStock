@@ -67,10 +67,10 @@ class Financial:
     def getFSPeriod(self):
         return self.__FSPeriod
 
-    def getEPS(self):
+    def getPE(self):
         return self.__PE
 
-    def getPE(self):
+    def getPBV(self):
         return self.__PBV
 
     def getBookValuepershare(self):

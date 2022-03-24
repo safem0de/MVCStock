@@ -149,6 +149,8 @@ class MainMenu(ttk.Frame):
 
             anlsCtrl.openAnalyseWindow()
             anlsCtrl.deleteMinusProfit(fin)
-            anlsCtrl.calculateGrowth(fin)
+            # anlsCtrl.calculateGrowth(fin,'asset')
+            # anlsCtrl.calculateGrowth(fin,'revenue')
+            # anlsCtrl.calculateGrowth(fin,'netprofit')
 
 
