@@ -78,6 +78,7 @@ class AnalyseContoller:
         all_average_growth = []
         removal_list = []
         average_growth = 0
+        more_is_good = True
         cal = self.__dictOfSET100
         for c in cal:
             financials = cal.get(c)
@@ -89,12 +90,6 @@ class AnalyseContoller:
                 growthtype = financials.getNetProfit()
             elif datatype == "roe":
                 growthtype = financials.getROE()
-            elif datatype == "pe":
-                growthtype = financials.getPE()
-            elif datatype == "pbv":
-                growthtype = financials.getPBV()
-            elif datatype == "eps":
-                growthtype = financials.getEPS()
             else:
                 growthtype = financials.getAssets()
 
@@ -124,10 +119,16 @@ class AnalyseContoller:
         average_growth = round(sum(all_average_growth)/len(all_average_growth),3)
         print(datatype, average_growth)
 
-        for l in removal_list:
-            if l[1] < average_growth:
-                # print(l[0],l[1])
-                cal.pop(l[0])
+        if more_is_good:
+            for l in removal_list:
+                if l[1] < average_growth:
+                    # print(l[0],l[1])
+                    cal.pop(l[0])
+        else:
+            for l in removal_list:
+                if l[1] > average_growth:
+                    # print(l[0],l[1])
+                    cal.pop(l[0])
 
         self.__dictOfSET100 = cal
 

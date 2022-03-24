@@ -6,7 +6,8 @@ from Models.StockDetails import *
 import pandas as pd
 
 class StockController:
-
+    # https://marketdata.set.or.th/mkt/sectorquotation.do?market=SET&sector=ICT&language=th&country=TH
+    # https://www.set.or.th/set/commonslookup.do?language=th&country=TH&prefix=NUMBER
     def __init__(self):
         try:
             self.__dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
@@ -15,7 +16,11 @@ class StockController:
             self.__stock.fillna('-', inplace = True)
         except:
             pass
-    
+            
+        # df = pd.read_html('https://www.set.or.th/set/commonslookup.do?language=th&country=TH&prefix=NUMBER'
+        #                 , match="ชื่อย่อหลักทรัพย์" ,encoding='utf8')
+        # print(df[0])
+
     def Intiallize(self):
         c = Connection()
         c.connect()

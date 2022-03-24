@@ -2,6 +2,7 @@
 # https://docs.python.org/3/library/asyncio.html
 
 import asyncio
+import pandas as pd
 
 async def main():
     print('Hello ...')
