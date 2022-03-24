@@ -1,4 +1,7 @@
+from os import remove
 from tkinter import Toplevel
+
+from numpy import average
 from Views.Analyse import *
 from Models.AnalyseDetails import *
 
@@ -7,6 +10,7 @@ import pandas as pd
 class AnalyseContoller:
 
     __dictOfSET100 = {}
+    __caculatedSET100 = {}
 
     def __init__(self):
         pass
@@ -71,32 +75,49 @@ class AnalyseContoller:
     # https://realpython.com/iterate-through-dictionary-python/
     # https://www.w3schools.com/python/python_dictionaries_access.asp
     def calculateGrowth(self, financials):
+        all_average_growth = []
+        removal_list = []
+        average_growth = 0
         cal = self.__dictOfSET100
         for c in cal:
             financials = cal.get(c)
             growthAsset = financials.getAssets()
-            print(c)
-            # x = [int(key) for key in sorted(growthAsset, reverse=True) if not growthAsset[key] == "-"]
-            # y = [float(growthAsset[key]) for key in sorted(growthAsset, reverse=True) if not growthAsset[key] == "-"]
-            # print(x,y)
+
             year = []
             asset = []
             for key in sorted(growthAsset, reverse=True):
                 if not growthAsset[key] == "-":
-                    # year_asset[int(key)] = float(growthAsset[key])
                     year.append(int(key))
                     asset.append(float(growthAsset[key]))
 
             year_asset = list(zip(year,asset))
-            # print(year_asset)
             res_growth = []
             for i in range(len(year_asset)):
+                
                 if i+1 < len(year_asset):
-                    print(f"((สินทรัพย์ปี {year_asset[i][0]} - สินทรัพย์ปี {year_asset[i+1][0]})/ สินทรัพย์ปี {year_asset[i+1][0]})*100")
-                    print("อัตราการเติบโตของทรัพย์สิน (ต่อปี)")
+                    # print(f"((สินทรัพย์ปี {year_asset[i][0]} - สินทรัพย์ปี {year_asset[i+1][0]})/ สินทรัพย์ปี {year_asset[i+1][0]})*100")
+                    # print("อัตราการเติบโตของทรัพย์สิน (ต่อปี)")
                     x = ((year_asset[i][1]-year_asset[i+1][1])/year_asset[i+1][1])*100
                     if len(res_growth) < 3:
-                        res_growth.append(x)
+                        res_growth.append(round(x,3))
+
+            print(c)
+            print(res_growth)
+            all_average_growth.append(round(sum(res_growth)/len(res_growth),3))
+            removal_list.append([c,round(sum(res_growth)/len(res_growth),3)])
             
-            print(int(sum(res_growth)/len(res_growth)))
+        average_growth = round(sum(all_average_growth)/len(all_average_growth),3)
+        print(average_growth)
+
+        for l in removal_list:
+            if l[1] < average_growth:
+                # print(l[0],l[1])
+                cal.pop(l[0])
+
+        self.__dictOfSET100 = cal
+
+        print(self.__dictOfSET100)
+        print(len(self.__dictOfSET100))
+
+
 

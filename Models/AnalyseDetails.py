@@ -1,8 +1,10 @@
 class Financial:
 
     def __init__(self):
+        # Constructor
         pass
 
+    # Encapsulation
     __Assets = {}
     __Liabilities = {}
     __Equity = {}
@@ -131,3 +133,16 @@ class Financial:
 
     def setDvdYield(self, param):
         self.__DvdYield = param
+
+
+class FinancialGrowth:
+    def __init__(self):
+        pass
+
+    __Assets = []
+    __Revenue = []
+    __NetProfit = []
+    __ROE = []
+    __PE = []
+    __PBV = []
+    __EPS = []
