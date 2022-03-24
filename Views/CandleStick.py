@@ -5,7 +5,7 @@ from tkinter.messagebox import showinfo
 import pandas as pd
 
 import matplotlib.pyplot as plt
-from mplfinance import mpf
+from mplfinance import mplfinance
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 import yfinance as yf
@@ -32,10 +32,10 @@ class CandleStick(ttk.Frame):
         self.ptl_df.plot(kind='bar', legend=True, ax=self.ax)
         self.ax.set_title('The Title for your chart')
 
-        self.fig = plt.Figure(figsize=(6,5), dpi=100)
-        mpf.plot(self.ptl_df)
+        self.fig = mplfinance.plot(self.ptl_df)
         self.chart_typez = FigureCanvasTkAgg(self.fig, self)
         self.chart_typez.get_tk_widget().grid(row=1, column=1, sticky=tk.W)
+
 
 
         
