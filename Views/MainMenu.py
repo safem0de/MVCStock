@@ -32,7 +32,7 @@ class MainMenu(ttk.Frame):
         super().__init__(parent)
 
         anlsCtrl = AnalyseContoller()
-        cdlsCtrl = CandleContoller()
+        cdlsCtrl = CandleStickContoller()
 
         # test = anlsCtrl.testcreateusableDF(self.stock)
 

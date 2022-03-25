@@ -1,7 +1,7 @@
 from tkinter import Toplevel
 from Views.CandleStick import *
 
-class CandleContoller:
+class CandleStickContoller:
 
     def __init__(self):
         pass
@@ -9,5 +9,5 @@ class CandleContoller:
     def openCandelStick(self):
         candle = Toplevel()
         candle.title("Candle Stick")
-        view = CandleStick(candle)
-        view.grid(row=0, column=0, padx=10, pady=10)
+        candleview = CandleStickChart(candle)
+        candleview.grid(row=0, column=0, padx=10, pady=10)
