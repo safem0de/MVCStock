@@ -1,5 +1,6 @@
 from multiprocessing.sharedctypes import Value
-from tkinter import DISABLED, ttk
+from tkinter import ttk
+from tkinter import *
 import tkinter as tk
 from tkinter.messagebox import showinfo
 
@@ -24,17 +25,11 @@ class MainMenu(ttk.Frame):
     header = stockCtrl.StockHeader()
     set100 = stockCtrl.StockData()
 
-    # financial = stockCtrl.StockStatement(stock)
-    # fin_header = stockCtrl.StockStatementHeader(stock)
-    # fin_data = stockCtrl.StockStatementData(stock)
-
     def __init__(self, parent):
         super().__init__(parent)
 
         anlsCtrl = AnalyseContoller()
         cdlsCtrl = CandleStickContoller()
-
-        # test = anlsCtrl.testcreateusableDF(self.stock)
 
         #create widgets
         self.labelheader = ttk.Label(self, text = 'SET100')
@@ -152,5 +147,9 @@ class MainMenu(ttk.Frame):
             # anlsCtrl.calculateGrowth(fin,'asset')
             # anlsCtrl.calculateGrowth(fin,'revenue')
             # anlsCtrl.calculateGrowth(fin,'netprofit')
+
+        def on_closing():
+            if showinfo.askokcancel("Quit", "Do you want to quit?"):
+                self.destroy()
 
 
