@@ -33,7 +33,7 @@ class CandleStickChart(ttk.Frame):
         self.image_reference = None
         self.image_label.grid(row=1, column=0, sticky=tk.W)
 
-        self.get_image_and_display()
+        # self.get_image_and_display()
         # self.figure = plt.Figure(figsize=(6,5), dpi=100)
         # self.ax = self.figure.add_subplot(111)
         # self.chart_type = FigureCanvasTkAgg(self.figure, self)
@@ -53,7 +53,7 @@ class CandleStickChart(ttk.Frame):
         # security_dataframe.set_index('Date', inplace=True)
 
         img_buffer = io.BytesIO()
-        mpf.plot(security_dataframe, type='candle', style='yahoo', volume=True, show_nontrading=False, savefig=dict(fname=img_buffer, dpi=192), figscale=1.0)
+        mpf.plot(security_dataframe, type='candle', style='yahoo', volume=True, show_nontrading=False, savefig=dict(fname=img_buffer, dpi=100), figscale=1.0)
         plt.close('all')
         img_buffer.seek(0)
 

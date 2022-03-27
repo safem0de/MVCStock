@@ -12,7 +12,7 @@ class App(Tk):
         super().__init__(*args, **kwargs)
         Button(self, text="Start",
                command=self.start).pack()
-
+        self.geometry('+10+10')
         Plotter()
 
     def start(self):
