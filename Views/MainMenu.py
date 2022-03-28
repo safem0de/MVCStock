@@ -4,9 +4,7 @@ from tkinter import *
 import tkinter as tk
 from tkinter.messagebox import showinfo
 
-import asyncio, time
-
-from click import command
+import asyncio
 
 from Models.StockDetails import *
 from Controllers.StockController import *
@@ -106,14 +104,11 @@ class MainMenu(ttk.Frame):
 
         ### ------------------table2--------------------###
         def financialTable():
-            # test = self.stockCtrl.PrepareDataToAnalyse(self.stock)
-            # anlsCtrl.DataframeToModel(test)
 
             financial = self.stockCtrl.StockStatement(self.stock)
             fin_header = self.stockCtrl.StockStatementHeader(financial)
             fin_data = self.stockCtrl.StockStatementData(financial)
 
-            # columns2 = self.fin_header
             columns2 = fin_header
 
             self.tree2 = ttk.Treeview(self, columns=columns2, show='headings', name='financial')
@@ -137,7 +132,8 @@ class MainMenu(ttk.Frame):
         # https://stackoverflow.com/questions/14535730/what-does-hashable-mean-in-python
         async def BtnAnalyseClick():
             # self.StockAnalyse_btn.config(state=DISABLED)
-            fin = Financial()
+
+            
 
             __SETfucking100 = await self.stockCtrl.getSET100Name()
             __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
@@ -147,8 +143,12 @@ class MainMenu(ttk.Frame):
                 [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
                 print("No Memories")
 
-            anlsCtrl.openAnalyseWindow()
-            anlsCtrl.deleteMinusProfit(fin)
+            a = StockAnalyse()
+            a.openAnalyseWindow()
+            
+
+            # test.openAnalyseWindow()
+            # test.deleteMinusProfit(fin)
             # anlsCtrl.calculateGrowth(fin,'asset')
             # anlsCtrl.calculateGrowth(fin,'revenue')
             # anlsCtrl.calculateGrowth(fin,'netprofit')
@@ -158,6 +158,3 @@ class MainMenu(ttk.Frame):
                 cdlsCtrl.TryPlotly(self.stock.getStockName())
             else:
                 showinfo(title='Information', message='กรุณาเลือก "หุ้น" ที่ต้องการดูกราฟในตารางน้ะจ้ะ !!!')
-
-
-

@@ -1,7 +1,5 @@
-from os import remove
 from tkinter import Toplevel
 
-from numpy import average
 from Views.Analyse import *
 from Models.AnalyseDetails import *
 
@@ -14,12 +12,6 @@ class AnalyseContoller:
 
     def __init__(self):
         pass
-
-    def openAnalyseWindow(self):
-        analyse = Toplevel()
-        analyse.title("Stock Analyse")
-        view = StockAnalyse(analyse)
-        view.grid(row=0, column=0, padx=10, pady=10)
 
     def isValid_SET100_dict(self):
         return bool(self.__dictOfSET100)
@@ -91,7 +83,7 @@ class AnalyseContoller:
             elif datatype == "roe":
                 growthtype = financials.getROE()
             else:
-                growthtype = financials.getAssets()
+                pass
 
             year = []
             asset = []
@@ -134,6 +126,3 @@ class AnalyseContoller:
 
         print(self.__dictOfSET100)
         print(len(self.__dictOfSET100))
-
-
-
