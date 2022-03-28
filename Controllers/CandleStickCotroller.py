@@ -20,8 +20,9 @@ class CandleStickContoller:
         # https://aroussi.com/post/python-yahoo-finance
         # period => 1d, 5d, 1mo, 3mo, 6mo, 1y, 2y, 5y, 10y, ytd, max
         ticker = yf.Ticker(stockName+'.BK')
-        ptl_df = ticker.history(period="6mo")
+        ptl_df = ticker.history(period="1y")
 
+        # https://www.geeksforgeeks.org/how-to-move-a-column-to-first-position-in-pandas-dataframe/
         ptl_df['Date'] = ptl_df.index
         # shift column 'Name' to first position
         first_column = ptl_df.pop('Date')
@@ -29,10 +30,9 @@ class CandleStickContoller:
         # insert column using insert(position,column_name,
         # first_column) function
         ptl_df.insert(0, 'Date', first_column)
-
         ptl_df.index = [l for l in range(0,len(ptl_df))]
-        # print(ptl_df.index)
-        # print(ptl_df.head())
+
+        print(ptl_df.head())
 
         def rma(x, n, y0):
             a = (n-1) / n
@@ -56,13 +56,14 @@ class CandleStickContoller:
 
             return np.r_[np.full((e2-1)+(n-1), np.nan), y0, np.cumsum(ak * x)/ak/((n+1)/2) + y0 * a**m]
 
-        df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
+        # df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/finance-charts-apple.csv')
+        df = ptl_df
         n = 14
 
-        df.rename(columns = {'AAPL.Close':'close'}, inplace = True)
+        # df.rename(columns = {'AAPL.Close':'close'}, inplace = True)
 
         # RS
-        df['change'] = df.close.diff() # Calculate change
+        df['change'] = df.Close.diff() # Calculate change
         df['gain'] = df.change.mask(df.change < 0, 0.0)
         df['loss'] = -df.change.mask(df.change > 0, -0.0)
         df['avg_gain'] = rma(df.gain[n+1:].to_numpy(), n, np.nansum(df.gain.to_numpy()[:n+1])/n)
@@ -72,16 +73,15 @@ class CandleStickContoller:
 
 
         e1 = 12
-        df['ema12'] = ema(df.close[e1:].to_numpy(), e1, np.nansum(df.close.to_numpy()[:e1])/e1)
+        df['ema12'] = ema(df.Close[e1:].to_numpy(), e1, np.nansum(df.Close.to_numpy()[:e1])/e1)
         e2 = 26
-        df['ema26'] = ema(df.close[e2:].to_numpy(), e2, np.nansum(df.close.to_numpy()[:e2])/e2)
+        df['ema26'] = ema(df.Close[e2:].to_numpy(), e2, np.nansum(df.Close.to_numpy()[:e2])/e2)
         df['macd_line'] = df.ema12 - df.ema26
         sign = 9
         df['signal'] = ema_signal(df.macd_line[e2+sign-1:].to_numpy(), sign, np.nansum(df.macd_line.to_numpy()[e2-1:e2-1+sign])/sign,e2)
         df['histogram'] = df.macd_line - df.signal
 
-        # print(df.head())
-        # print(df.index)
+        print(df.head())
 
         fig = make_subplots(rows=4, cols=1, row_heights=[0.5, 0.1, 0.2, 0.2])
 
@@ -101,10 +101,10 @@ class CandleStickContoller:
 
         fig.add_trace(
             go.Candlestick(x=df['Date'],
-                        open=df['AAPL.Open'],
-                        high=df['AAPL.High'],
-                        low=df['AAPL.Low'],
-                        close=df['close'],
+                        open=df['Open'],
+                        high=df['High'],
+                        low=df['Low'],
+                        close=df['Close'],
                         name="CandleStick"),
                     row=1, col=1
         )
@@ -159,7 +159,7 @@ class CandleStickContoller:
             row=4, col=1
         )
 
-        fig.update_layout(height=800, width=1024, title_text="AAPL")
+        fig.update_layout(height=800, width=1024, title_text=stockName)
         fig.show()
 
 

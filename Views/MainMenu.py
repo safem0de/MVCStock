@@ -153,7 +153,7 @@ class MainMenu(ttk.Frame):
             if self.stockCtrl.isVaildStock(self.stock):
                 cdlsCtrl.TryPlotly(self.stock.getStockName())
             else:
-                showinfo(title='Information', message="กรุณาเลือกหุ้นที่ต้องการดูกราฟ")
+                showinfo(title='Information', message='กรุณาเลือก "หุ้น" ที่ต้องการดูกราฟในตารางน้ะจ้ะ !!!')
 
 
 
