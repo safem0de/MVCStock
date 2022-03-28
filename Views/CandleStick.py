@@ -26,6 +26,16 @@ class CandleStickChart(ttk.Frame):
     ticker = yf.Ticker('PTG.BK')
     ptl_df = ticker.history(period="6mo")
 
+    ptl_df['Date'] = ptl_df.index
+    # shift column 'Name' to first position
+    first_column = ptl_df.pop('Date')
+
+    # insert column using insert(position,column_name,
+    # first_column) function
+    ptl_df.insert(0, 'Date', first_column)
+
+    ptl_df.index = [l for l in range(0,len(ptl_df))]
+    # print(ptl_df.index)
     # print(ptl_df.head())
 
     def __init__(self,parent):
@@ -79,6 +89,7 @@ class CandleStickChart(ttk.Frame):
             ak = a**np.arange(len(x)-1, -1, -1)
             return np.r_[np.full(n, np.nan), y0, np.cumsum(ak * x) / ak / n + y0 * a**np.arange(1, len(x)+1)]
 
+        # https://investexcel.net/how-to-calculate-macd-in-excel/
         def ema(x, n, y0):
             a = (n-1)/(n+1) # n=12 => 11/13
             k = np.arange(len(x)-1, -1, -1)
@@ -100,7 +111,7 @@ class CandleStickChart(ttk.Frame):
 
         df.rename(columns = {'AAPL.Close':'close'}, inplace = True)
 
-        # RSI
+        # RS
         df['change'] = df.close.diff() # Calculate change
         df['gain'] = df.change.mask(df.change < 0, 0.0)
         df['loss'] = -df.change.mask(df.change > 0, -0.0)
@@ -118,6 +129,9 @@ class CandleStickChart(ttk.Frame):
         sign = 9
         df['signal'] = ema_signal(df.macd_line[e2+sign-1:].to_numpy(), sign, np.nansum(df.macd_line.to_numpy()[e2-1:e2-1+sign])/sign,e2)
         df['histogram'] = df.macd_line - df.signal
+
+        # print(df.head())
+        # print(df.index)
 
         fig = make_subplots(rows=4, cols=1, row_heights=[0.5, 0.1, 0.2, 0.2])
 

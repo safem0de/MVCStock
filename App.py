@@ -10,8 +10,8 @@ class App(tk.Tk):
         super().__init__()
 
         self.title('Safem0de Stock')
-        # self.geometry('+1921+10')
-        self.geometry('+10+10')
+        self.geometry('+1921+10')
+        # self.geometry('+10+10')
 
         # create a view and place it on the root window
         view = MainMenu(self)

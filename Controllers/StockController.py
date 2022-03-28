@@ -13,7 +13,17 @@ class StockController:
             self.__dfsList = pd.read_html('https://marketdata.set.or.th/mkt/sectorquotation.do?sector=SET100&language=th&country=TH'
                         , match="เครื่องหมาย" ,encoding='utf8')
             self.__stock = self.__dfsList[0]
-            self.__stock.fillna('-', inplace = True)
+            # self.__stock.fillna('-', inplace = True)
+            # https://datatofish.com/convert-string-to-float-dataframe/
+            # df['DataFrame Column'] = pd.to_numeric(df['DataFrame Column'],errors='coerce')
+            self.__stock['เครื่องหมาย'].fillna('-', inplace = True)
+
+            self.__stock['ปริมาณ(หุ้น)'] = pd.to_numeric(self.__stock['ปริมาณ(หุ้น)'],errors='ignore')
+            self.__stock['ปริมาณ(หุ้น)'] = self.__stock['ปริมาณ(หุ้น)'].map('{:,.2f}'.format)
+
+            self.__stock["มูลค่า('000 บาท)"] = pd.to_numeric(self.__stock["มูลค่า('000 บาท)"],errors='ignore')
+            self.__stock["มูลค่า('000 บาท)"] = self.__stock["มูลค่า('000 บาท)"].map('{:,.2f}'.format)
+            # print(self.__stock.head())
         except:
             pass
             
