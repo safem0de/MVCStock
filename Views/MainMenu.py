@@ -39,7 +39,7 @@ class MainMenu(ttk.Frame):
         self.FinanceDetails_btn = ttk.Button(self, text='Stock NEWS')
         self.FinanceDetails_btn.grid(row=1, column=0, padx=3, sticky=tk.EW)
 
-        self.StockDetails_btn = ttk.Button(self, text='CandleStick', command=lambda:cdlsCtrl.openCandelStick())
+        self.StockDetails_btn = ttk.Button(self, text='CandleStick', command=lambda:BtnCandleClick())
         self.StockDetails_btn.grid(row=2, column=0, padx=3, sticky=tk.EW)
 
         self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:asyncio.run(BtnAnalyseClick()))
@@ -148,8 +148,12 @@ class MainMenu(ttk.Frame):
             # anlsCtrl.calculateGrowth(fin,'revenue')
             # anlsCtrl.calculateGrowth(fin,'netprofit')
 
-        def on_closing():
-            if showinfo.askokcancel("Quit", "Do you want to quit?"):
-                self.destroy()
+        def BtnCandleClick():
+
+            if self.stockCtrl.isVaildStock(self.stock):
+                cdlsCtrl.TryPlotly(self.stock.getStockName())
+            else:
+                showinfo(title='Information', message="กรุณาเลือกหุ้นที่ต้องการดูกราฟ")
+
 
 

@@ -48,13 +48,13 @@ class StockController:
         except:
             return list()
 
-    def __isVaildStock(self, StockDetail):
+    def isVaildStock(self, StockDetail):
         if StockDetail.getStockName() != "":
             return True
         return False
 
     def StockStatement(self, StockDetail) -> pd.DataFrame:
-        if self.__isVaildStock(StockDetail):
+        if self.isVaildStock(StockDetail):
             dfstock = pd.read_html('https://www.set.or.th/set/companyhighlight.do?symbol=' + StockDetail.getStockName() + '&language=th&country=TH'
                        , match="งวดงบการเงิน")
             df = dfstock[0]
