@@ -70,3 +70,22 @@ class StockAnalyse(ttk.Frame):
                 onvalue='pe',
                 offvalue='')
         self.checkbox_PE.grid(row=5, column=0, sticky=tk.W)
+
+        columns = ('first_name', 'last_name', 'email')
+
+        self.tree = ttk.Treeview(self, columns=columns, show='headings', name='analyse')
+
+        # define headings
+        for col in columns:
+            self.tree.heading(col, text = col)
+            self.tree.column(col, minwidth=0, width=80, stretch=False)
+
+        # generate sample data
+        contacts = []
+        for n in range(1, 100):
+            contacts.append((f'first {n}', f'last {n}', f'email{n}@example.com'))
+
+        for contact in contacts:
+            self.tree.insert('', tk.END, values=contact)
+
+        self.tree.grid(row=0, column=1, rowspan=20, pady=3, sticky=tk.NS)

@@ -45,6 +45,9 @@ class MainMenu(ttk.Frame):
         self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:asyncio.run(BtnAnalyseClick()))
         self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.EW)
 
+        self.Bibliogy_btn = ttk.Button(self, text='Bibliogy', command=lambda:print('Safem0de'))
+        self.Bibliogy_btn.grid(row=4, column=0, padx=3, sticky=tk.EW)
+
         self.labelfooter = ttk.Label(self, text = self.status)
         self.labelfooter.grid(row=40, column=0, padx=3, sticky=tk.S)
 
@@ -56,7 +59,7 @@ class MainMenu(ttk.Frame):
         # define headings
         for col in columns:
             self.tree.heading(col, text = col)
-            self.tree.column(col, minwidth=0, width=80, stretch=False)
+            self.tree.column(col, minwidth=0, width=80, stretch=False, anchor=tk.E)
 
         # generate sample data
         # contacts = []
@@ -149,7 +152,6 @@ class MainMenu(ttk.Frame):
             # anlsCtrl.calculateGrowth(fin,'netprofit')
 
         def BtnCandleClick():
-
             if self.stockCtrl.isVaildStock(self.stock):
                 cdlsCtrl.TryPlotly(self.stock.getStockName())
             else:
