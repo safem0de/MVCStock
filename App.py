@@ -9,7 +9,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        self.title('Safem0de Stock V.0.1.0')
+        self.title('Safem0de Stock Version 0.1.0')
         self.geometry('+1921+10')
         self.iconbitmap('icon.ico')
         # self.geometry('+10+10')

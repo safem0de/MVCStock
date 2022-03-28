@@ -6,6 +6,8 @@ from tkinter.messagebox import showinfo
 
 import asyncio, time
 
+from click import command
+
 from Models.StockDetails import *
 from Controllers.StockController import *
 
@@ -36,7 +38,7 @@ class MainMenu(ttk.Frame):
         self.labelheader.grid(row=0, column=0, sticky=tk.W)
 
         #create button Menu
-        self.FinanceDetails_btn = ttk.Button(self, text='Stock NEWS')
+        self.FinanceDetails_btn = ttk.Button(self, text='Stock NEWS', command=lambda:showinfo(title='Information', message='กรุณารอผู้พัฒนาใน Version 0.1.1'))
         self.FinanceDetails_btn.grid(row=1, column=0, padx=3, sticky=tk.EW)
 
         self.StockDetails_btn = ttk.Button(self, text='CandleStick', command=lambda:BtnCandleClick())
@@ -45,11 +47,11 @@ class MainMenu(ttk.Frame):
         self.StockAnalyse_btn = ttk.Button(self, text='Analyse', command=lambda:asyncio.run(BtnAnalyseClick()))
         self.StockAnalyse_btn.grid(row=3, column=0, padx=3, sticky=tk.EW)
 
-        self.Bibliogy_btn = ttk.Button(self, text='Bibliogy', command=lambda:print('Safem0de'))
-        self.Bibliogy_btn.grid(row=4, column=0, padx=3, sticky=tk.EW)
+        self.Bibliogy_btn = ttk.Button(self, text='Bibliogy', command=lambda:showinfo(title='Information', message='Safem0de กำลังรวบรวมข้อมูล'))
+        self.Bibliogy_btn.grid(row=40, column=0, padx=3, sticky=tk.EW)
 
         self.labelfooter = ttk.Label(self, text = self.status)
-        self.labelfooter.grid(row=40, column=0, padx=3, sticky=tk.S)
+        self.labelfooter.grid(row=40, column=1, padx=3, sticky=tk.E)
 
         # define columns
         columns = self.header
