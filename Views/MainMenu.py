@@ -9,9 +9,8 @@ import asyncio
 from Models.StockDetails import *
 from Controllers.StockController import *
 
-from Models.AnalyseDetails import *
-from Controllers.AnalyseController import *
-
+# from Models.AnalyseDetails import *
+# from Controllers.AnalyseController import *
 
 from Controllers.CandleStickController import *
 from Views.Analyse import *
@@ -28,8 +27,7 @@ class MainMenu(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        global anlsCtrl
-        anlsCtrl = Analysis()
+        # anlsCtrl = AnalysisData()
         cdlsCtrl = CandleStickController()
 
         #create widgets
@@ -137,9 +135,9 @@ class MainMenu(ttk.Frame):
             __SETfucking100 = await self.stockCtrl.getSET100Name()
             __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
             __prepared_df = [await self.stockCtrl.PrepareDataToAnalyse(l) for l in __df_stock]
-            __dict_cleaned = {l.Name : await anlsCtrl.DataframeToModel(l) for l in __prepared_df}
-            if not anlsCtrl.isValid_SET100_dict():
-                [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
+            __dict_cleaned = {l.Name : await self.stockCtrl.DataframeToModel(l) for l in __prepared_df}
+            if not self.stockCtrl.isValid_SET100_dict():
+                [await self.stockCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
                 print("No Memories")
 
             print(type(self))

@@ -7,6 +7,8 @@ from Controllers.AnalyseController import *
 
 class StockAnalyse(tk.Toplevel):
 
+    a = AnalysisData()
+
     def __init__(self,parent):
         super().__init__(parent)
 
@@ -24,7 +26,6 @@ class StockAnalyse(tk.Toplevel):
         self,
         text='อัตราการเติบโตของสินทรัพย์สูงกว่าค่าเฉลี่ย (Asset Growth)',
         command = lambda:self.test(self.checkbox_asset_var.get()),
-        # command = lambda:print('test'),
         variable=self.checkbox_asset_var,
         onvalue='asset',
         offvalue='')
@@ -99,4 +100,7 @@ class StockAnalyse(tk.Toplevel):
 
         f = Financial()
         print(type(f))
+
+        print(type(self.a))
+
 
