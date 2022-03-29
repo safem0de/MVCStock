@@ -1,22 +1,15 @@
-from tkinter import Toplevel
-
 from Views.Analyse import *
 from Models.AnalyseDetails import *
 
 import pandas as pd
 
-class AnalyseContoller:
+class Analysis:
+
+    __dictOfSET100 = {}
+    __caculatedSET100 = {}
 
     def __init__(self):
-        # pass
-        self.__dictOfSET100 = {}
-        self.__caculatedSET100 = {}
-
-    def openAnalyseWindow(self):
-        analyse = Toplevel()
-        analyse.title("Stock Analyse")
-        view = StockAnalyse(analyse)
-        view.grid(row=0, column=0, padx=10, pady=10)
+        pass
 
     def isValid_SET100_dict(self):
         return bool(self.__dictOfSET100)
@@ -66,8 +59,8 @@ class AnalyseContoller:
         for l in removal_list:
             cal.pop(l)
 
-        self.__dictOfSET100 = cal
-        print(cal)
+        self.__caculatedSET100 = cal
+        print(self.__caculatedSET100['ACE'].getNetProfit())
 
 
     # https://realpython.com/iterate-through-dictionary-python/

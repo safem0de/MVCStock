@@ -3,13 +3,16 @@ import tkinter as tk
 from tkinter.messagebox import showinfo
 
 from Models.AnalyseDetails import *
-from Controllers.StockController import *
-from Controllers.AnalyseContoller import *
+from Controllers.AnalyseController import *
 
-class StockAnalyse(ttk.Frame):
+class StockAnalyse(tk.Toplevel):
 
     def __init__(self,parent):
         super().__init__(parent)
+
+        # https://www.pythontutorial.net/tkinter/tkinter-toplevel/
+        # self.geometry('300x100')
+        self.title('Analysis Mode')
 
         #create widgets
         self.labelheader = ttk.Label(self, text = 'Analyse')
@@ -20,7 +23,8 @@ class StockAnalyse(ttk.Frame):
         self.checkbox_asset = ttk.Checkbutton(
         self,
         text='อัตราการเติบโตของสินทรัพย์สูงกว่าค่าเฉลี่ย (Asset Growth)',
-        command = lambda:print(self.checkbox_asset_var.get()),
+        command = lambda:self.test(self.checkbox_asset_var.get()),
+        # command = lambda:print('test'),
         variable=self.checkbox_asset_var,
         onvalue='asset',
         offvalue='')
@@ -89,3 +93,10 @@ class StockAnalyse(ttk.Frame):
             self.tree.insert('', tk.END, values=contact)
 
         self.tree.grid(row=0, column=1, rowspan=20, pady=3, sticky=tk.NS)
+
+    def test(self,x):
+        print(x)
+
+        f = Financial()
+        print(type(f))
+
