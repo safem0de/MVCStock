@@ -132,23 +132,18 @@ class MainMenu(ttk.Frame):
         # https://stackoverflow.com/questions/14535730/what-does-hashable-mean-in-python
         async def BtnAnalyseClick():
             # self.StockAnalyse_btn.config(state=DISABLED)
-
+            fin = Financial()
             
-
             __SETfucking100 = await self.stockCtrl.getSET100Name()
             __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
             __prepared_df = [await self.stockCtrl.PrepareDataToAnalyse(l) for l in __df_stock]
             __dict_cleaned = {l.Name : await anlsCtrl.DataframeToModel(l) for l in __prepared_df}
             if not anlsCtrl.isValid_SET100_dict():
                 [await anlsCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
-                print("No Memories")
+                print("No Memories")            
 
-            a = StockAnalyse()
-            a.openAnalyseWindow()
-            
-
-            # test.openAnalyseWindow()
-            # test.deleteMinusProfit(fin)
+            anlsCtrl.openAnalyseWindow()
+            anlsCtrl.deleteMinusProfit(fin)
             # anlsCtrl.calculateGrowth(fin,'asset')
             # anlsCtrl.calculateGrowth(fin,'revenue')
             # anlsCtrl.calculateGrowth(fin,'netprofit')

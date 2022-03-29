@@ -8,13 +8,6 @@ from Controllers.AnalyseContoller import *
 
 class StockAnalyse(ttk.Frame):
 
-    def openAnalyseWindow():
-        analyse = Toplevel()
-        analyse.title("Stock Analyse")
-        view = StockAnalyse(analyse)
-        view.grid(row=0, column=0, padx=10, pady=10)
-    
-
     def __init__(self,parent):
         super().__init__(parent)
 

@@ -7,11 +7,16 @@ import pandas as pd
 
 class AnalyseContoller:
 
-    __dictOfSET100 = {}
-    __caculatedSET100 = {}
-
     def __init__(self):
-        pass
+        # pass
+        self.__dictOfSET100 = {}
+        self.__caculatedSET100 = {}
+
+    def openAnalyseWindow(self):
+        analyse = Toplevel()
+        analyse.title("Stock Analyse")
+        view = StockAnalyse(analyse)
+        view.grid(row=0, column=0, padx=10, pady=10)
 
     def isValid_SET100_dict(self):
         return bool(self.__dictOfSET100)
@@ -62,6 +67,7 @@ class AnalyseContoller:
             cal.pop(l)
 
         self.__dictOfSET100 = cal
+        print(cal)
 
 
     # https://realpython.com/iterate-through-dictionary-python/
