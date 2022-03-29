@@ -140,8 +140,8 @@ class MainMenu(ttk.Frame):
                 [await self.stockCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
                 print("No Memories")
 
-            print(type(self))
-            print(type(parent))
+            # print(type(self))
+            # print(type(parent))
 
             window = StockAnalyse(self)
             window.grab_set()

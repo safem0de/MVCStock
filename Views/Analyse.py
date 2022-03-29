@@ -7,8 +7,6 @@ from Controllers.AnalyseController import *
 
 class StockAnalyse(tk.Toplevel):
 
-    a = AnalysisData()
-
     def __init__(self,parent):
         super().__init__(parent)
 
@@ -101,6 +99,7 @@ class StockAnalyse(tk.Toplevel):
         f = Financial()
         print(type(f))
 
-        print(type(self.a))
+        a = AnalysisData()
+        print(type(a))
 
 

@@ -1,5 +1,6 @@
 from Views.Analyse import *
 from Models.AnalyseDetails import *
+from Controllers.StockController import *
 
 class AnalysisData:
 
