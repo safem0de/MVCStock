@@ -12,11 +12,11 @@ class StockAnalyse(tk.Toplevel):
         self.allData = allData
         super().__init__(parent)
 
-        f = Financial()
-        print(type(f))
+        self.f = Financial()
+        # print(type(self.f))
 
-        a = AnalysisData(self.allData)
-        a.deleteMinusProfit(f)
+        self.a = AnalysisData(self.allData)
+        # self.a.deleteMinusProfit(self.f)
         
         # https://www.pythontutorial.net/tkinter/tkinter-toplevel/
         # self.geometry('300x100')
@@ -31,7 +31,7 @@ class StockAnalyse(tk.Toplevel):
         self.checkbox_asset = ttk.Checkbutton(
         self,
         text='อัตราการเติบโตของสินทรัพย์สูงกว่าค่าเฉลี่ย (Asset Growth)',
-        command = lambda:print(self.checkbox_asset_var.get()),
+        command = lambda:checkbox_assetSelected(self.checkbox_asset_var.get()),
         variable=self.checkbox_asset_var,
         onvalue='asset',
         offvalue='')
@@ -90,10 +90,7 @@ class StockAnalyse(tk.Toplevel):
             self.tree.heading(col, text = col)
             self.tree.column(col, minwidth=0, width=150, stretch=True, anchor=tk.CENTER)
 
-        # generate sample data
-        contacts = []
-        for n in range(1, 100):
-            contacts.append((f'first {n}', f'last {n}', f'email{n}@example.com'))
+        contacts = self.a.deleteMinusProfit(self.f)
 
         for contact in contacts:
             self.tree.insert('', tk.END, values=contact)
@@ -106,8 +103,9 @@ class StockAnalyse(tk.Toplevel):
         self.labelfooter = ttk.Label(self, text = '**ในตารางไม่นำ "หุ้น" ที่มีการขาดทุนในงบฯย้อนหลัง 3-5 ปี มาพิจารณา', foreground='red')
         self.labelfooter.grid(row=40, column=0, columnspan=3, pady=3, sticky=tk.SE)
 
-    def test(self):
-        pass
+        def checkbox_assetSelected(x):
+            print(x)
+            self.a.calculateGrowth(self.f,x)
 
 
 

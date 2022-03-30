@@ -24,7 +24,8 @@ class AnalysisData:
             cal.pop(l)
 
         self.__caculatedSET100 = cal
-        print(len(self.__caculatedSET100))
+        return self.__caculatedSET100
+        # print(self.__caculatedSET100)
 
 
     # https://realpython.com/iterate-through-dictionary-python/
@@ -34,7 +35,7 @@ class AnalysisData:
         removal_list = []
         average_growth = 0
         more_is_good = True
-        cal = self.__dictOfSET100
+        cal = self.__caculatedSET100
         for c in cal:
             financials = cal.get(c)
             if datatype == "asset":
@@ -85,7 +86,7 @@ class AnalysisData:
                     # print(l[0],l[1])
                     cal.pop(l[0])
 
-        self.__dictOfSET100 = cal
+        self.__caculatedSET100 = cal
 
-        print(self.__dictOfSET100)
-        print(len(self.__dictOfSET100))
+        print(self.__caculatedSET100)
+        print(len(self.__caculatedSET100))
