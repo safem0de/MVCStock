@@ -5,8 +5,9 @@ class AnalysisData:
 
     __caculatedSET100 = {}
 
-    def __init__(self):
-        pass
+    def __init__(self,allData):
+        self.allData = allData
+        print(self.allData)
 
     def deleteMinusProfit(self, financials):
         cal = self.__dictOfSET100

@@ -167,3 +167,6 @@ class StockController:
         analyseModel.setBookValuepershare(data['มูลค่าหุ้นทางบัญชีต่อหุ้น (บาท)'])
         analyseModel.setDvdYield(data['อัตราส่วนเงินปันผลตอบแทน(%)'])
         self.__dictOfSET100[i] = analyseModel
+
+    def getAllData(self):
+        return self.__dictOfSET100

@@ -136,14 +136,16 @@ class MainMenu(ttk.Frame):
             __df_stock = [await self.stockCtrl.StockStatementDataFrame(l) for l in __SETfucking100]
             __prepared_df = [await self.stockCtrl.PrepareDataToAnalyse(l) for l in __df_stock]
             __dict_cleaned = {l.Name : await self.stockCtrl.DataframeToModel(l) for l in __prepared_df}
+
             if not self.stockCtrl.isValid_SET100_dict():
                 [await self.stockCtrl.setAllData(l,__dict_cleaned[l]) for l in __dict_cleaned]
                 print("No Memories")
 
             # print(type(self))
             # print(type(parent))
-
-            window = StockAnalyse(self)
+            allData = self.stockCtrl.getAllData()
+            print(allData)
+            window = StockAnalyse(self,allData)
             window.grab_set()
 
             # anlsCtrl.openAnalyseWindow()

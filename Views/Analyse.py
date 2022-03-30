@@ -7,9 +7,10 @@ from Controllers.AnalyseController import *
 
 class StockAnalyse(tk.Toplevel):
 
-    def __init__(self,parent):
+    def __init__(self,parent,allData):
+        self.allData = allData
         super().__init__(parent)
-
+        
         # https://www.pythontutorial.net/tkinter/tkinter-toplevel/
         # self.geometry('300x100')
         self.title('Analysis Mode')
@@ -92,6 +93,8 @@ class StockAnalyse(tk.Toplevel):
             self.tree.insert('', tk.END, values=contact)
 
         self.tree.grid(row=0, column=1, rowspan=20, pady=3, sticky=tk.NS)
+        self.labelfooter = ttk.Label(self, text = '**ในตารางดังกล่าวไม่นำ "หุ้น" ที่มีการขาดทุนในงบย้อนหลัง 4-5 ปี มาพิจารณา', foreground='red')
+        self.labelfooter.grid(row=40, column=1, pady=3, sticky=tk.S)
 
     def test(self,x):
         print(x)
@@ -99,7 +102,7 @@ class StockAnalyse(tk.Toplevel):
         f = Financial()
         print(type(f))
 
-        a = AnalysisData()
+        a = AnalysisData(self.allData)
         print(type(a))
 
 
