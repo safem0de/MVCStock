@@ -29,7 +29,7 @@ class MainMenu(ttk.Frame):
 
         # https://stackoverflow.com/questions/51697858/python-how-do-i-add-a-theme-from-ttkthemes-package-to-a-guizero-application
         self.style = ThemedStyle(self)
-        self.style.set_theme("clearlooks")
+        self.style.set_theme("aquativo")
 
         #create widgets
         self.labelheader = ttk.Label(self, text = 'SET100')

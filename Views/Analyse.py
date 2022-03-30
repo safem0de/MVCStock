@@ -1,6 +1,7 @@
 from tkinter import ttk
 import tkinter as tk
 from tkinter.messagebox import showinfo
+from turtle import heading
 
 from Models.AnalyseDetails import *
 from Controllers.AnalyseController import *
@@ -81,14 +82,13 @@ class StockAnalyse(tk.Toplevel):
         offvalue='')
         self.checkbox_PE.grid(row=5, column=0, padx=3, sticky=tk.W)
 
-        columns = ('หลักทรัพย์', 'งบ(ปี)', 'อัตราการเติบโต\n(สินทรัพย์)เฉลี่ย','อัตราการเติบโตเฉลี่ย(รายได้)','อัตราการเติบโตเฉลี่ย(กำไร)')
-
-        self.tree = ttk.Treeview(self, columns=columns, show='headings', name='analyse',height=20)
+        columns = ('หลักทรัพย์', 'งบ(ปี)', 'อัตราการเติบโต(สินทรัพย์)เฉลี่ย','อัตราการเติบโต(รายได้)เฉลี่ย','อัตราการเติบโต(กำไร)เฉลี่ย')
+        self.tree = ttk.Treeview(self, columns=columns, show='headings', name='analyse')
 
         # define headings
         for col in columns:
             self.tree.heading(col, text = col)
-            self.tree.column(col, minwidth=0, width=90, stretch=False)
+            self.tree.column(col, minwidth=0, width=150, stretch=True, anchor=tk.CENTER)
 
         # generate sample data
         contacts = []
