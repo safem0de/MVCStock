@@ -1,4 +1,3 @@
-from multiprocessing.sharedctypes import Value
 from tkinter import ttk
 from tkinter import *
 import tkinter as tk
@@ -9,11 +8,10 @@ import asyncio
 from Models.StockDetails import *
 from Controllers.StockController import *
 
-# from Models.AnalyseDetails import *
-# from Controllers.AnalyseController import *
-
 from Controllers.CandleStickController import *
 from Views.Analyse import *
+
+from ttkthemes import ThemedStyle
 
 class MainMenu(ttk.Frame):
     
@@ -27,8 +25,11 @@ class MainMenu(ttk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        # anlsCtrl = AnalysisData()
         cdlsCtrl = CandleStickController()
+
+        # https://stackoverflow.com/questions/51697858/python-how-do-i-add-a-theme-from-ttkthemes-package-to-a-guizero-application
+        self.style = ThemedStyle(self)
+        self.style.set_theme("clearlooks")
 
         #create widgets
         self.labelheader = ttk.Label(self, text = 'SET100')
@@ -144,7 +145,7 @@ class MainMenu(ttk.Frame):
             # print(type(self))
             # print(type(parent))
             allData = self.stockCtrl.getAllData()
-            print(allData)
+            print(len(allData))
             window = StockAnalyse(self,allData)
             window.grab_set()
 

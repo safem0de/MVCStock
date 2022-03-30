@@ -6,8 +6,7 @@ class AnalysisData:
     __caculatedSET100 = {}
 
     def __init__(self,allData):
-        self.allData = allData
-        print(self.allData)
+        self.__dictOfSET100 = allData
 
     def deleteMinusProfit(self, financials):
         cal = self.__dictOfSET100
@@ -25,7 +24,7 @@ class AnalysisData:
             cal.pop(l)
 
         self.__caculatedSET100 = cal
-        print(self.__caculatedSET100['ACE'].getNetProfit())
+        print(len(self.__caculatedSET100))
 
 
     # https://realpython.com/iterate-through-dictionary-python/
