@@ -15,6 +15,7 @@ class StockAnalyse(tk.Toplevel):
         # print(type(self.f))
 
         self.a = AnalysisData(self.allData)
+        self.analyseTable(self.a.InitialTable(self.f))
         # self.a.deleteMinusProfit(self.f)
         
         # https://www.pythontutorial.net/tkinter/tkinter-toplevel/
@@ -72,16 +73,22 @@ class StockAnalyse(tk.Toplevel):
         offvalue='')
         self.checkbox_PE.grid(row=5, column=0, padx=3, sticky=tk.W)
 
-        self.checkbox_PE_var = tk.StringVar()
-        self.checkbox_PE = ttk.Checkbutton(self,
+        self.checkbox_PBV_var = tk.StringVar()
+        self.checkbox_PBV = ttk.Checkbutton(self,
         text='ค่า PE ต่ำกว่าตลาด',
-        command=lambda:print(self.checkbox_PE_var.get()),
-        variable=self.checkbox_PE_var,
+        command=lambda:print(self.checkbox_PBV_var.get()),
+        variable=self.checkbox_PBV_var,
         onvalue='pe',
         offvalue='')
         self.checkbox_PE.grid(row=5, column=0, padx=3, sticky=tk.W)
 
-        columns = ('หลักทรัพย์', 'งบ(ปี)', 'อัตราการเติบโต(สินทรัพย์)เฉลี่ย','อัตราการเติบโต(รายได้)เฉลี่ย','อัตราการเติบโต(กำไร)เฉลี่ย')
+        def checkbox_assetSelected(x):
+            print(x)
+            self.a.calculateMean_Growth(self.f,x)
+            self.analyseTable(list())
+
+    def analyseTable(self,stk):
+        columns = ('หลักทรัพย์', 'งบ(ปี)ที่คำนวณ', 'อัตราการเติบโต(สินทรัพย์)เฉลี่ย','อัตราการเติบโต(รายได้)เฉลี่ย','อัตราการเติบโต(กำไร)เฉลี่ย','อัตราการเติบโต(%ROE)เฉลี่ย')
         self.tree = ttk.Treeview(self, columns=columns, show='headings', name='analyse')
 
         # define headings
@@ -89,22 +96,18 @@ class StockAnalyse(tk.Toplevel):
             self.tree.heading(col, text = col)
             self.tree.column(col, minwidth=0, width=150, stretch=True, anchor=tk.CENTER)
 
-        contacts = self.a.deleteMinusProfit(self.f)
-
-        for contact in contacts:
-            self.tree.insert('', tk.END, values=contact)
+        for s in stk:
+            self.tree.insert('', tk.END, values=s)
 
         self.tree.grid(row=0, column=1, rowspan=20, pady=3, sticky=tk.NS)
         scrollbar = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree.yview)
         self.tree.configure(yscroll=scrollbar.set)
         scrollbar.grid(row=0, column=2, rowspan=20, pady=3, sticky=tk.NS)
 
-        self.labelfooter = ttk.Label(self, text = '**ในตารางไม่นำ "หุ้น" ที่มีการขาดทุนในงบฯย้อนหลัง 3-5 ปี มาพิจารณา', foreground='red')
+        self.labelfooter = ttk.Label(self, text = f'**ในตารางไม่นำ "หุ้น" ที่มีการขาดทุนในงบฯย้อนหลัง 3-5 ปี มาพิจารณา {len(stk)} ตัว', foreground='red')
         self.labelfooter.grid(row=40, column=0, columnspan=3, pady=3, sticky=tk.SE)
 
-        def checkbox_assetSelected(x):
-            print(x)
-            self.a.calculateGrowth(self.f,x)
+
 
 
 
