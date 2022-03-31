@@ -1,7 +1,6 @@
 from tkinter import ttk
 import tkinter as tk
 from tkinter.messagebox import showinfo
-from turtle import heading
 
 from Models.AnalyseDetails import *
 from Controllers.AnalyseController import *

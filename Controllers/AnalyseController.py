@@ -1,3 +1,4 @@
+from calendar import c
 from Views.Analyse import *
 from Models.AnalyseDetails import *
 
@@ -24,8 +25,26 @@ class AnalysisData:
             cal.pop(l)
 
         self.__caculatedSET100 = cal
+
+        TblList = []
+        for c in cal:
+            financials = cal.get(c)
+
+            assets = financials.getAssets()
+            revenues = financials.getRevenue()
+            netprofits = financials.getNetProfit()
+            roes = financials.getROE()
+
+            print("#######--ast--########")
+            print(self.calculateGrowthAverage(assets))
+            print("#######--rev--##########")
+            print(self.calculateGrowthAverage(revenues))
+            print("#######--net--########")
+            print(self.calculateGrowthAverage(netprofits))
+            print("#######--roe--########")
+            print(self.calculateGrowthAverage(roes))
+
         return self.__caculatedSET100
-        # print(self.__caculatedSET100)
 
 
     # https://realpython.com/iterate-through-dictionary-python/
@@ -46,8 +65,6 @@ class AnalysisData:
                 growthtype = financials.getNetProfit()
             elif datatype == "roe":
                 growthtype = financials.getROE()
-            else:
-                pass
 
             year = []
             asset = []
@@ -90,3 +107,24 @@ class AnalysisData:
 
         print(self.__caculatedSET100)
         print(len(self.__caculatedSET100))
+
+    def calculateGrowthAverage(self,growthtype):
+        year = []
+        asset = []
+        for key in sorted(growthtype, reverse=True):
+            if not growthtype[key] == "-":
+                year.append(int(key))
+                asset.append(float(growthtype[key]))
+
+        year_asset = list(zip(year,asset))
+        res_growth = []
+        for i in range(len(year_asset)):
+                
+            if i+1 < len(year_asset):
+            # print(f"((สินทรัพย์ปี {year_asset[i][0]} - สินทรัพย์ปี {year_asset[i+1][0]})/ สินทรัพย์ปี {year_asset[i+1][0]})*100")
+            # print("อัตราการเติบโตของทรัพย์สิน (ต่อปี)")
+                x = ((year_asset[i][1]-year_asset[i+1][1])/year_asset[i+1][1])*100
+                if len(res_growth) < 3:
+                    res_growth.append(round(x,3))
+
+        print(f'res: {res_growth}')
