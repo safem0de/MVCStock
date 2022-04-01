@@ -1,4 +1,4 @@
-from calendar import c
+
 from statistics import mean
 
 from Views.Analyse import *
@@ -8,7 +8,7 @@ class AnalysisData:
 
     __caculatedSET100 = []
     __current_List = []
-    __accumulated_List = []
+    # __accumulated_List = []
     __filterDict = {}
 
     def __init__(self,allData):
@@ -41,78 +41,25 @@ class AnalysisData:
             revenues = financials.getRevenue()
             netprofits = financials.getNetProfit()
             roes = financials.getROE()
+            pes = financials.getPE()
+            pbvs = financials.getPBV()
 
             TblList.append([c,
                 3 if len(self.makeYear_Growth(assets)) >= 3 else len(self.makeYear_Growth(assets)),
                 self.calculateIndiviaual_Growth(assets),
                 self.calculateIndiviaual_Growth(revenues),
                 self.calculateIndiviaual_Growth(netprofits),
-                self.calculateIndiviaual_Growth(roes)
+                self.calculateIndiviaual_Growth(roes),
+                self.getLatestValue(pes),
+                self.getLatestValue(pbvs),
             ])
 
         return TblList
 
-
     # https://realpython.com/iterate-through-dictionary-python/
     # https://www.w3schools.com/python/python_dictionaries_access.asp
-    # def calculateGrowth(self, financials, datatype):
-    #     all_average_growth = []
-    #     removal_list = []
-    #     average_growth = 0
-    #     more_is_good = True
-    #     cal = self.__caculatedSET100
-    #     for c in cal:
-    #         financials = cal.get(c)
-    #         if datatype == "asset":
-    #             growthtype = financials.getAssets()
-    #         elif datatype == "revenue":
-    #             growthtype = financials.getRevenue()
-    #         elif datatype == "netprofit":
-    #             growthtype = financials.getNetProfit()
-    #         elif datatype == "roe":
-    #             growthtype = financials.getROE()
-
-    #         year = []
-    #         asset = []
-    #         for key in sorted(growthtype, reverse=True):
-    #             if not growthtype[key] == "-":
-    #                 year.append(int(key))
-    #                 asset.append(float(growthtype[key]))
-
-    #         year_asset = list(zip(year,asset))
-    #         res_growth = []
-    #         for i in range(len(year_asset)):
-                
-    #             if i+1 < len(year_asset):
-    #                 # print(f"((สินทรัพย์ปี {year_asset[i][0]} - สินทรัพย์ปี {year_asset[i+1][0]})/ สินทรัพย์ปี {year_asset[i+1][0]})*100")
-    #                 # print("อัตราการเติบโตของทรัพย์สิน (ต่อปี)")
-    #                 x = ((year_asset[i][1]-year_asset[i+1][1])/year_asset[i+1][1])*100
-    #                 if len(res_growth) < 3:
-    #                     res_growth.append(round(x,3))
-
-    #         # print(c)
-    #         # print(res_growth)
-    #         all_average_growth.append(round(sum(res_growth)/len(res_growth),3))
-    #         removal_list.append([c,round(sum(res_growth)/len(res_growth),3)])
-            
-    #     average_growth = round(sum(all_average_growth)/len(all_average_growth),3)
-    #     print(datatype, average_growth)
-
-    #     if more_is_good:
-    #         for l in removal_list:
-    #             if l[1] < average_growth:
-    #                 # print(l[0],l[1])
-    #                 cal.pop(l[0])
-    #     else:
-    #         for l in removal_list:
-    #             if l[1] > average_growth:
-    #                 # print(l[0],l[1])
-    #                 cal.pop(l[0])
-
-    #     self.__caculatedSET100 = cal
-
-    #     print(self.__caculatedSET100)
-    #     print(len(self.__caculatedSET100))
+    def getLatestValue(self,latestvalue):
+        return list(latestvalue.values())[-1]
 
     def makeYear_Growth(self,growthtype) -> list[tuple]:
         year = []
@@ -157,6 +104,10 @@ class AnalysisData:
                 x = financials.getNetProfit()
             elif datatype == "roe":
                 x = financials.getROE()
+            elif datatype == "pe":
+                x = financials.getPE()
+            elif datatype == "pbv":
+                x = financials.getPBV()
             else:
                 return
             
@@ -175,24 +126,44 @@ class AnalysisData:
             if k == 'revenue':
                 self.__filterDict[k][0] = 3
                 self.__filterDict[k][1] = self.calculateMean_Growth(financials,k)
-        print(self.__filterDict)
+            if k == 'netprofit':
+                self.__filterDict[k][0] = 4
+                self.__filterDict[k][1] = self.calculateMean_Growth(financials,k)
+            if k == 'roe':
+                self.__filterDict[k][0] = 5
+                self.__filterDict[k][1] = self.calculateMean_Growth(financials,k)
+        # print(self.__filterDict)
         self.__current_List = self.InitialTable(financials)
+        return self.filter_data(financials)
 
-    def filter_recursive(self):
-        self.__filterList
+    def filter_data(self,financials):
+        self.__filterDict
         self.__current_List
-        self.__accumulated_List
-        # Base case
-        if len(self.__filterList) == 0:
+        __accumulated_List = []
+
+        if len(self.__filterDict) == 0:
             return self.__current_List
-        # Recursive case
+
         else:
-            for j in self.__filterList:
+            for j in self.__filterDict:
                 for k in self.__current_List:
-                    # if k[j] < calculateMean_Growth(financials)
-                    pass
-                
-            # accumulated_sum = accumulated_sum + current_number
-            # current_number = current_number + 1
-            return self.filter_recursive()
+                    # print(k)
+                    # print(self.__filterDict[j][0])
+                    # print(float(self.calculateMean_Growth(financials,j)))
+                    if float(k[self.__filterDict[j][0]]) < float(self.calculateMean_Growth(financials,j)):
+                        __accumulated_List.append(k)
+
+            # print(self.__current_List)
+            
+            for l in __accumulated_List:
+                try:
+                    print(l)
+                    self.__current_List.remove(l)
+                except Exception as e:
+                    print(e)
+
+            # print(__accumulated_List)
+            # print(self.__current_List)
+            return self.__current_List
+            
         

@@ -32,7 +32,7 @@ class StockAnalyse(tk.Toplevel):
         self.checkbox_asset_var = tk.StringVar()
         self.checkbox_asset = ttk.Checkbutton(
         self,
-        text='อัตราการเติบโตของสินทรัพย์สูงกว่าค่าเฉลี่ย (Asset Growth)',
+        text=f'อัตราการเติบโตของสินทรัพย์สูงกว่าค่าเฉลี่ย (Asset Growth) >> {self.a.calculateMean_Growth(self.f,"asset")}',
         command = lambda:checkbox_assetSelected(self.checkbox_asset_var.get()),
         variable=self.checkbox_asset_var,
         onvalue='asset',
@@ -41,7 +41,7 @@ class StockAnalyse(tk.Toplevel):
 
         self.checkbox_revenue_var = tk.StringVar()
         self.checkbox_revenue = ttk.Checkbutton(self,
-        text='อัตราการเติบโตของรายได้สูงกว่าค่าเฉลี่ย (Revenue Growth)',
+        text=f'อัตราการเติบโตของรายได้สูงกว่าค่าเฉลี่ย (Revenue Growth) >> {self.a.calculateMean_Growth(self.f,"revenue")}',
         command=lambda:checkbox_revenueSelected(self.checkbox_revenue_var.get()),
         variable=self.checkbox_revenue_var,
         onvalue='revenue',
@@ -50,7 +50,7 @@ class StockAnalyse(tk.Toplevel):
 
         self.checkbox_netprofit_var = tk.StringVar()
         self.checkbox_netprofit = ttk.Checkbutton(self,
-        text='อัตราการเติบโตของกำไรสูงกว่าค่าเฉลี่ย (NetProfit Growth)',
+        text=f'อัตราการเติบโตของกำไรสูงกว่าค่าเฉลี่ย (NetProfit Growth) >> {self.a.calculateMean_Growth(self.f,"netprofit")}',
         command=lambda:checkbox_netprofitSelected(self.checkbox_netprofit_var.get()),
         variable=self.checkbox_netprofit_var,
         onvalue='netprofit',
@@ -59,7 +59,7 @@ class StockAnalyse(tk.Toplevel):
 
         self.checkbox_ROE_var = tk.StringVar()
         self.checkbox_ROE = ttk.Checkbutton(self,
-        text='อัตราการเติบโตของ ROE สูงกว่าค่าเฉลี่ย (ROE Growth)',
+        text=f'อัตราการเติบโตของ ROE สูงกว่าค่าเฉลี่ย (ROE Growth) >> {self.a.calculateMean_Growth(self.f,"roe")}',
         command=lambda:checkbox_roeSelected(self.checkbox_ROE_var.get()),
         variable=self.checkbox_ROE_var,
         onvalue='roe',
@@ -68,7 +68,7 @@ class StockAnalyse(tk.Toplevel):
 
         self.checkbox_PE_var = tk.StringVar()
         self.checkbox_PE = ttk.Checkbutton(self,
-        text='ค่า PE ต่ำกว่าตลาด',
+        text=f'ค่า PE ต่ำกว่าตลาด >> {None}',
         command=lambda:checkbox_peSelected(self.checkbox_PE_var.get()),
         variable=self.checkbox_PE_var,
         onvalue='pe',
@@ -77,7 +77,7 @@ class StockAnalyse(tk.Toplevel):
 
         self.checkbox_PBV_var = tk.StringVar()
         self.checkbox_PBV = ttk.Checkbutton(self,
-        text='ค่า P/BV ต่ำกว่าตลาด',
+        text=f'ค่า P/BV ต่ำกว่าตลาด >> {None}',
         command=lambda:checkbox_pbvSelected(self.checkbox_PBV_var.get()),
         variable=self.checkbox_PBV_var,
         onvalue='pbv',
@@ -91,7 +91,7 @@ class StockAnalyse(tk.Toplevel):
                 self.__stateOfFilter.remove('asset')
 
             y = self.a.clickEvents(self.f,self.__stateOfFilter)
-            # self.analyseTable(y)
+            self.analyseTable(y)
 
         def checkbox_revenueSelected(x):
             if x == 'revenue':
@@ -100,7 +100,7 @@ class StockAnalyse(tk.Toplevel):
                 self.__stateOfFilter.remove('revenue')
 
             y = self.a.clickEvents(self.f,self.__stateOfFilter)
-            # self.analyseTable(y)
+            self.analyseTable(y)
 
         def checkbox_netprofitSelected(x):
             if x == 'netprofit':
@@ -108,8 +108,9 @@ class StockAnalyse(tk.Toplevel):
             else:
                 self.__stateOfFilter.remove('netprofit')
 
+            self.analyseTable(list())
             y = self.a.clickEvents(self.f,self.__stateOfFilter)
-            # self.analyseTable(y)
+            self.analyseTable(y)
 
         def checkbox_roeSelected(x):
             if x == 'roe':
@@ -117,8 +118,9 @@ class StockAnalyse(tk.Toplevel):
             else:
                 self.__stateOfFilter.remove('roe')
 
+            self.analyseTable(list())
             y = self.a.clickEvents(self.f,self.__stateOfFilter)
-            # self.analyseTable(y)
+            self.analyseTable(y)
 
         def checkbox_peSelected(x):
             if x == 'pe':
@@ -139,13 +141,13 @@ class StockAnalyse(tk.Toplevel):
             # self.analyseTable(y)
 
     def analyseTable(self,stk):
-        columns = ('หลักทรัพย์', 'งบ(ปี)ที่คำนวณ', 'อัตราการเติบโต(สินทรัพย์)เฉลี่ย','อัตราการเติบโต(รายได้)เฉลี่ย','อัตราการเติบโต(กำไร)เฉลี่ย','อัตราการเติบโต(%ROE)เฉลี่ย')
+        columns = ('หลักทรัพย์', 'งบ(ปี)ที่คำนวณ', '(สินทรัพย์)เฉลี่ย','(รายได้)เฉลี่ย','(กำไร)เฉลี่ย','(%ROE)เฉลี่ย','(P/E)ล่าสุด','(P/BV)ล่าสุด')
         self.tree = ttk.Treeview(self, columns=columns, show='headings', name='analyse')
 
         # define headings
         for col in columns:
             self.tree.heading(col, text = col)
-            self.tree.column(col, minwidth=0, width=150, stretch=True, anchor=tk.CENTER)
+            self.tree.column(col, minwidth=0, width=100, stretch=True, anchor=tk.CENTER)
 
         for s in stk:
             self.tree.insert('', tk.END, values=s)

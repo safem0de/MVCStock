@@ -59,7 +59,7 @@ class MainMenu(ttk.Frame):
         # define headings
         for col in columns:
             self.tree.heading(col, text = col)
-            self.tree.column(col, minwidth=0, width=80, stretch=False, anchor=tk.E)
+            self.tree.column(col, minwidth=0, width=100, stretch=False, anchor=tk.E)
 
         # generate sample data
         # contacts = []
@@ -115,7 +115,7 @@ class MainMenu(ttk.Frame):
             
             for col2 in columns2:
                 self.tree2.heading(col2, text = col2)
-                self.tree2.column(col2, minwidth=0, width=160, stretch=False)
+                self.tree2.column(col2, minwidth=0, width=180, stretch=False)
 
             # for data in self.fin_data:
             for data in fin_data:
