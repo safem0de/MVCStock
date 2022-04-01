@@ -172,6 +172,9 @@ class AnalysisData:
             if k == 'asset':
                 self.__filterDict[k][0] = 2
                 self.__filterDict[k][1] = self.calculateMean_Growth(financials,k)
+            if k == 'revenue':
+                self.__filterDict[k][0] = 3
+                self.__filterDict[k][1] = self.calculateMean_Growth(financials,k)
         print(self.__filterDict)
         self.__current_List = self.InitialTable(financials)
 
