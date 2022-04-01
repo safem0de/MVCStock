@@ -84,8 +84,8 @@ class StockAnalyse(tk.Toplevel):
 
         def checkbox_assetSelected(x):
             print(x)
-            self.a.calculateMean_Growth(self.f,x)
-            self.analyseTable(list())
+            y = self.a.clickEvents(self.f,x)
+            self.analyseTable(y)
 
     def analyseTable(self,stk):
         columns = ('หลักทรัพย์', 'งบ(ปี)ที่คำนวณ', 'อัตราการเติบโต(สินทรัพย์)เฉลี่ย','อัตราการเติบโต(รายได้)เฉลี่ย','อัตราการเติบโต(กำไร)เฉลี่ย','อัตราการเติบโต(%ROE)เฉลี่ย')

@@ -110,7 +110,7 @@ class AnalysisData:
     #     print(self.__caculatedSET100)
     #     print(len(self.__caculatedSET100))
 
-    def makeYear_Growth(self,growthtype):
+    def makeYear_Growth(self,growthtype) -> list[tuple]:
         year = []
         valueOfGrowth = []
         for key in sorted(growthtype, reverse=True):
@@ -121,7 +121,7 @@ class AnalysisData:
         year_growth = list(zip(year,valueOfGrowth))
         return year_growth
 
-    def calculateGrowth(self,growthtype):
+    def calculateGrowth(self,growthtype) -> list:
         year_growth = self.makeYear_Growth(growthtype)
         res_growth = []
         for i in range(len(year_growth)):
@@ -162,4 +162,11 @@ class AnalysisData:
         
         average_growth = mean([mean(l) for l in all_average_growth])
         return round(average_growth,3)
+        
+
+    def clickEvents(self,financials,datatype):
+        x = self.InitialTable(financials)
+        x_bar = self.calculateMean_Growth(financials,datatype)
+        print([x.remove(l) for l in x if 'asset' in datatype and float(l[2]) < x_bar])
+        return [x.remove(l) for l in x if 'asset' in datatype and float(l[2]) < x_bar]
         
