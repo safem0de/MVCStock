@@ -3,9 +3,11 @@ import tkinter as tk
 from tkinter.messagebox import showinfo
 
 from Models.AnalyseDetails import *
-from Controllers.AnalyseController import *
+from Controllers.AnalyseController import AnalysisData
 
 class StockAnalyse(tk.Toplevel):
+
+    __stateOfFilter = []
 
     def __init__(self,parent,allData):
         self.allData = allData
@@ -34,58 +36,107 @@ class StockAnalyse(tk.Toplevel):
         command = lambda:checkbox_assetSelected(self.checkbox_asset_var.get()),
         variable=self.checkbox_asset_var,
         onvalue='asset',
-        offvalue='')
+        offvalue='rm_asset')
         self.checkbox_asset.grid(row=1, column=0, padx=3, sticky=tk.W)
 
         self.checkbox_revenue_var = tk.StringVar()
         self.checkbox_revenue = ttk.Checkbutton(self,
         text='อัตราการเติบโตของรายได้สูงกว่าค่าเฉลี่ย (Revenue Growth)',
-        command=lambda:print(self.checkbox_revenue_var.get()),
+        command=lambda:checkbox_revenueSelected(self.checkbox_revenue_var.get()),
         variable=self.checkbox_revenue_var,
         onvalue='revenue',
-        offvalue='')
+        offvalue='rm_revenue')
         self.checkbox_revenue.grid(row=2, column=0, padx=3, sticky=tk.W)
 
         self.checkbox_netprofit_var = tk.StringVar()
         self.checkbox_netprofit = ttk.Checkbutton(self,
         text='อัตราการเติบโตของกำไรสูงกว่าค่าเฉลี่ย (NetProfit Growth)',
-        command=lambda:print(self.checkbox_netprofit_var.get()),
+        command=lambda:checkbox_netprofitSelected(self.checkbox_netprofit_var.get()),
         variable=self.checkbox_netprofit_var,
         onvalue='netprofit',
-        offvalue='')
+        offvalue='rm_netprofit')
         self.checkbox_netprofit.grid(row=3, column=0, padx=3, sticky=tk.W)
 
         self.checkbox_ROE_var = tk.StringVar()
         self.checkbox_ROE = ttk.Checkbutton(self,
         text='อัตราการเติบโตของ ROE สูงกว่าค่าเฉลี่ย (ROE Growth)',
-        command=lambda:print(self.checkbox_ROE_var.get()),
+        command=lambda:checkbox_roeSelected(self.checkbox_ROE_var.get()),
         variable=self.checkbox_ROE_var,
         onvalue='roe',
-        offvalue='')
+        offvalue='rm_roe')
         self.checkbox_ROE.grid(row=4, column=0, padx=3, sticky=tk.W)
 
         self.checkbox_PE_var = tk.StringVar()
         self.checkbox_PE = ttk.Checkbutton(self,
         text='ค่า PE ต่ำกว่าตลาด',
-        command=lambda:print(self.checkbox_PE_var.get()),
+        command=lambda:checkbox_peSelected(self.checkbox_PE_var.get()),
         variable=self.checkbox_PE_var,
         onvalue='pe',
-        offvalue='')
+        offvalue='rm_pe')
         self.checkbox_PE.grid(row=5, column=0, padx=3, sticky=tk.W)
 
         self.checkbox_PBV_var = tk.StringVar()
         self.checkbox_PBV = ttk.Checkbutton(self,
-        text='ค่า PE ต่ำกว่าตลาด',
-        command=lambda:print(self.checkbox_PBV_var.get()),
+        text='ค่า P/BV ต่ำกว่าตลาด',
+        command=lambda:checkbox_pbvSelected(self.checkbox_PBV_var.get()),
         variable=self.checkbox_PBV_var,
-        onvalue='pe',
-        offvalue='')
-        self.checkbox_PE.grid(row=5, column=0, padx=3, sticky=tk.W)
+        onvalue='pbv',
+        offvalue='rm_pbv')
+        self.checkbox_PBV.grid(row=6, column=0, padx=3, sticky=tk.W)
 
         def checkbox_assetSelected(x):
-            print(x)
-            y = self.a.clickEvents(self.f,x)
-            self.analyseTable(y)
+            if x == 'asset':
+                self.__stateOfFilter.append(x)
+            else:
+                self.__stateOfFilter.remove('asset')
+
+            y = self.a.clickEvents(self.f,self.__stateOfFilter)
+            # self.analyseTable(y)
+
+        def checkbox_revenueSelected(x):
+            if x == 'revenue':
+                self.__stateOfFilter.append(x)
+            else:
+                self.__stateOfFilter.remove('revenue')
+
+            y = self.a.clickEvents(self.f,self.__stateOfFilter)
+            # self.analyseTable(y)
+
+        def checkbox_netprofitSelected(x):
+            if x == 'netprofit':
+                self.__stateOfFilter.append(x)
+            else:
+                self.__stateOfFilter.remove('netprofit')
+
+            y = self.a.clickEvents(self.f,self.__stateOfFilter)
+            # self.analyseTable(y)
+
+        def checkbox_roeSelected(x):
+            if x == 'roe':
+                self.__stateOfFilter.append(x)
+            else:
+                self.__stateOfFilter.remove('roe')
+
+            y = self.a.clickEvents(self.f,self.__stateOfFilter)
+            # self.analyseTable(y)
+
+        def checkbox_peSelected(x):
+            if x == 'pe':
+                self.__stateOfFilter.append(x)
+            else:
+                self.__stateOfFilter.remove('pe')
+
+            y = self.a.clickEvents(self.f,self.__stateOfFilter)
+            # self.analyseTable(y)
+
+        def checkbox_pbvSelected(x):
+            if x == 'pbv':
+                self.__stateOfFilter.append(x)
+            else:
+                self.__stateOfFilter.remove('pbv')
+
+            y = self.a.clickEvents(self.f,self.__stateOfFilter)
+            # self.analyseTable(y)
 
     def analyseTable(self,stk):
         columns = ('หลักทรัพย์', 'งบ(ปี)ที่คำนวณ', 'อัตราการเติบโต(สินทรัพย์)เฉลี่ย','อัตราการเติบโต(รายได้)เฉลี่ย','อัตราการเติบโต(กำไร)เฉลี่ย','อัตราการเติบโต(%ROE)เฉลี่ย')

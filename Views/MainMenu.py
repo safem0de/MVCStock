@@ -145,7 +145,7 @@ class MainMenu(ttk.Frame):
             # print(type(self))
             # print(type(parent))
             allData = self.stockCtrl.getAllData()
-            print(len(allData))
+            # print(len(allData))
             window = StockAnalyse(self,allData)
             window.grab_set()
 

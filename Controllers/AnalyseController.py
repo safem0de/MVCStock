@@ -1,11 +1,15 @@
 from calendar import c
 from statistics import mean
+
 from Views.Analyse import *
 from Models.AnalyseDetails import *
 
 class AnalysisData:
 
     __caculatedSET100 = []
+    __current_List = []
+    __accumulated_List = []
+    __filterDict = {}
 
     def __init__(self,allData):
         self.__dictOfSET100 = allData
@@ -141,7 +145,6 @@ class AnalysisData:
         self.deleteMinusProfit(financials)
         all_average_growth = []
         average_growth = -1
-        TblList = []
         x = None
         for c in self.__caculatedSET100:
             financials = self.__caculatedSET100.get(c)
@@ -155,7 +158,6 @@ class AnalysisData:
             elif datatype == "roe":
                 x = financials.getROE()
             else:
-                self.InitialTable(financials)
                 return
             
             all_average_growth.append(self.calculateGrowth(x))
@@ -164,9 +166,30 @@ class AnalysisData:
         return round(average_growth,3)
         
 
-    def clickEvents(self,financials,datatype):
-        x = self.InitialTable(financials)
-        x_bar = self.calculateMean_Growth(financials,datatype)
-        print([x.remove(l) for l in x if 'asset' in datatype and float(l[2]) < x_bar])
-        return [x.remove(l) for l in x if 'asset' in datatype and float(l[2]) < x_bar]
+    def clickEvents(self,financials,filterList):
+        self.__filterDict = {filterList[i]: [0,0] for i in range(len(filterList))}
+        for k in self.__filterDict:
+            if k == 'asset':
+                self.__filterDict[k][0] = 2
+                self.__filterDict[k][1] = self.calculateMean_Growth(financials,k)
+        print(self.__filterDict)
+        self.__current_List = self.InitialTable(financials)
+
+    def filter_recursive(self):
+        self.__filterList
+        self.__current_List
+        self.__accumulated_List
+        # Base case
+        if len(self.__filterList) == 0:
+            return self.__current_List
+        # Recursive case
+        else:
+            for j in self.__filterList:
+                for k in self.__current_List:
+                    # if k[j] < calculateMean_Growth(financials)
+                    pass
+                
+            # accumulated_sum = accumulated_sum + current_number
+            # current_number = current_number + 1
+            return self.filter_recursive()
         
