@@ -1,0 +1,3 @@
+([('App',
+   '/Users/naweeparbwangwanich/Documents/PythonProjects/MVCStock/dist/App',
+   'EXECUTABLE')],)
