@@ -10,14 +10,14 @@ from tkinter.messagebox import showinfo
 # import mplfinance as mpf
 # from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-import yfinance as yf
-from yahoofinancials import YahooFinancials
+# import yfinance as yf
+# from yahoofinancials import YahooFinancials
 
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+# import plotly.graph_objects as go
+# from plotly.subplots import make_subplots
 
-import pandas as pd
-import numpy as np
+# import pandas as pd
+# import numpy as np
 
 class CandleStickChart(ttk.Frame):
 

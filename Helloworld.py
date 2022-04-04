@@ -23,17 +23,27 @@ import pandas as pd
 def main():
     dflist = pd.read_html('https://www.set.or.th/set/companyprofile.do?symbol=ACE&country=TH'
                         , match="ชื่อบริษัท" ,encoding='utf8')
-    df = dflist[0]
-    # print(df)
-    # print((df.loc[[0]]))
-    # df.loc[[0]].to_csv('test')
+    df0 = dflist[0]
+    x = df0.values.tolist()
+    dict_za = {'ชื่อบริษัท':'',
+                'ที่อยู่':'',
+                'เบอร์โทรศัพท์':'',
+                'เว็บไซต์':'',
+                'กลุ่มอุตสาหกรรม':'',
+                'หมวดธุรกิจ':'',
+                'ทุนจดทะเบียน':'',
+                'ทุนจดทะเบียนชำระแล้ว':'',
+                'นโยบายเงินปันผล':''
+                }
+    t = []
+    for key in dict_za:
+        print(key)
 
-    # x = str(df.loc[[0]])
-    # y = x.replace('0','')
-    # print(y.strip())
-    # y.replace('ที่อยู่','#ที่อยู่')
 
-    df.loc[[0]].astype(str)
-    df.to_csv('test')
+    for i in range(len(x)):
+        y = str(x[i][0])
+        t.append(y)
 
+    for j in t:
+        print(j)
 main()

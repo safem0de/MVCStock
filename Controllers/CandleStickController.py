@@ -1,4 +1,12 @@
-from Views.CandleStick import *
+# from Views.CandleStick import *
+import yfinance as yf
+from yahoofinancials import YahooFinancials
+
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+import pandas as pd
+import numpy as np
 
 class CandleStickController:
 
@@ -98,6 +106,8 @@ class CandleStickController:
                         name="CandleStick"),
                     row=1, col=1
         )
+
+        #try this renko
 
         fig.add_trace(
             go.Scatter(x=df['Date'],

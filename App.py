@@ -3,14 +3,17 @@ import tkinter as tk
 from tkinter.ttk import *
 
 from Views.MainMenu import *
+import os
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
 
+
         self.title('Safem0de Stock Version 0.1.0')
-        # self.geometry('+1921+10')
-        self.iconbitmap('D:\Python Projects\MVCStock\icon.ico')
+        # self.geometry('+1920+0')
+        # self.iconbitmap('icon.ico')
+        self.state('zoomed')
         self.geometry('+10+10')
 
         # create a view and place it on the root window

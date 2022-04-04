@@ -59,7 +59,7 @@ class MainMenu(ttk.Frame):
         # define headings
         for col in columns:
             self.tree.heading(col, text = col)
-            self.tree.column(col, minwidth=0, width=100, stretch=False, anchor=tk.E)
+            self.tree.column(col, minwidth=0, width=90, stretch=False, anchor=tk.E)
 
         # generate sample data
         # contacts = []
@@ -105,6 +105,22 @@ class MainMenu(ttk.Frame):
         ### ------------------table2--------------------###
         def financialTable():
 
+            # self.lf = ttk.Labelframe(self, text=self.stock.getStockName())
+            # self.lf.grid(row=21, column=1, pady=3, sticky=tk.NS)
+
+            # alignment_var = tk.StringVar()
+            # alignments = ('Left', 'Center', 'Right')
+
+            # # create radio buttons and place them on the label frame
+
+            # grid_column = 0
+            # for alignment in alignments:
+            #     # create a radio button
+            #     radio = ttk.Radiobutton(self.lf, text=alignment, value=alignment, variable=alignment_var)
+            #     radio.grid(column=grid_column, row=0, ipadx=10, ipady=10)
+            #     # grid column
+            #     grid_column += 1
+
             financial = self.stockCtrl.StockStatement(self.stock)
             fin_header = self.stockCtrl.StockStatementHeader(financial)
             fin_data = self.stockCtrl.StockStatementData(financial)
@@ -121,12 +137,12 @@ class MainMenu(ttk.Frame):
             for data in fin_data:
                 self.tree2.insert('', tk.END, values=data)
 
-            self.tree2.grid(row=21, column=1, sticky=tk.NS)
+            self.tree2.grid(row=31, column=1, sticky=tk.NS)
 
             # add a scrollbar
             scrollbar2 = ttk.Scrollbar(self, orient=tk.VERTICAL, command=self.tree2.yview)
             self.tree2.configure(yscroll=scrollbar2.set)
-            scrollbar2.grid(row=21, column=2, rowspan=20, sticky=tk.NS)
+            scrollbar2.grid(row=31, column=2, rowspan=20, sticky=tk.NS)
 
         # https://stackoverflow.com/questions/42231161/asyncio-gather-vs-asyncio-wait
         # https://stackoverflow.com/questions/14535730/what-does-hashable-mean-in-python
