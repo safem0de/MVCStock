@@ -10,7 +10,7 @@ class App(tk.Tk):
 
         self.title('Safem0de Stock Version 0.1.0')
         # self.geometry('+1921+10')
-        self.iconbitmap('icon.ico')
+        self.iconbitmap('D:\Python Projects\MVCStock\icon.ico')
         self.geometry('+10+10')
 
         # create a view and place it on the root window
