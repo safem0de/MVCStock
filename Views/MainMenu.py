@@ -1,4 +1,5 @@
-from tkinter import ttk
+from distutils.cmd import Command
+from tkinter import font, ttk
 from tkinter import *
 import tkinter as tk
 from tkinter.messagebox import showinfo
@@ -12,6 +13,7 @@ from Controllers.CandleStickController import *
 from Views.Analyse import *
 
 from ttkthemes import ThemedStyle
+import webbrowser
 
 class MainMenu(ttk.Frame):
     
@@ -105,21 +107,28 @@ class MainMenu(ttk.Frame):
         ### ------------------table2--------------------###
         def financialTable():
 
-            # self.lf = ttk.Labelframe(self, text=self.stock.getStockName())
-            # self.lf.grid(row=21, column=1, pady=3, sticky=tk.NS)
+            self.lf = ttk.Labelframe(self, text=self.stock.getStockName(),)
+            self.lf.grid(row=21, column=1, pady=3, sticky=tk.EW)
 
-            # alignment_var = tk.StringVar()
-            # alignments = ('Left', 'Center', 'Right')
+            alignments = self.stockCtrl.getStockInfo(self.stock.getStockName())
 
-            # # create radio buttons and place them on the label frame
+            # create radio buttons and place them on the label frame
 
-            # grid_column = 0
-            # for alignment in alignments:
-            #     # create a radio button
-            #     radio = ttk.Radiobutton(self.lf, text=alignment, value=alignment, variable=alignment_var)
-            #     radio.grid(column=grid_column, row=0, ipadx=10, ipady=10)
-            #     # grid column
-            #     grid_column += 1
+            grid_row = 0
+            for alignment in alignments:
+                # create a radio button
+                if not 'www' in alignment:
+                    lbl = ttk.Label(self.lf, text=alignment)
+                    lbl.grid(column=0, row=grid_row, padx=3, sticky=W)
+                else:
+                    x = alignment.split()
+                    # lbl = ttk.Label(self.lf, text=x[0])
+                    # lbl.grid(column=0, row=grid_row, padx=3, sticky=W)
+                    lbl = ttk.Label(self.lf, text=x[1], foreground='blue',cursor="hand2")
+                    lbl.grid(column=0, row=grid_row, padx=3, sticky=W)
+                    lbl.bind("<Button-1>",lambda e : webbrowser.open_new_tab(x[1]))
+
+                grid_row += 1
 
             financial = self.stockCtrl.StockStatement(self.stock)
             fin_header = self.stockCtrl.StockStatementHeader(financial)
