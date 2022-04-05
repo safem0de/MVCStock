@@ -10,7 +10,7 @@ class App(tk.Tk):
         super().__init__()
 
 
-        self.title('Safem0de Stock Version 0.1.0')
+        self.title('Safem0de Stock Version 0.1.1')
         # self.geometry('+1920+0')
         # self.iconbitmap('icon.ico')
         self.state('zoomed')
